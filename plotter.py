@@ -106,7 +106,7 @@ def plot_psth_with_rasters_with_without_laser(electrode,cluster,spike_train,even
     ############ PSTHs ##############
 
     ax3 = fig.add_subplot(223)
-    bin_amount = (end_time-start_time)//bin_width
+    bin_amount = int((end_time-start_time)//bin_width)
     for taste in taste_list:
         # get the spike times that are in the range of start-stop from each event.
         spikes = [spike_train[i] - event for i in range(len(spike_train)) for event in event_dic_with_laser_data['without laser'][taste] if start_time < spike_train[i] - event < end_time]
@@ -127,7 +127,7 @@ def plot_psth_with_rasters_with_without_laser(electrode,cluster,spike_train,even
     ax3.axvline(laser_stop, linestyle='--', color='r')  # vertical lines
 
     ax4 = fig.add_subplot(224)
-    bin_amount = (end_time - start_time) // bin_width
+    bin_amount = int((end_time - start_time) // bin_width)
     for taste in taste_list:
         # get the spike times that are in the range of start-stop from each event.
         spikes = [spike_train[i] - event for i in range(len(spike_train)) for event in
@@ -223,7 +223,7 @@ def plot_psth_with_rasters(electrode, cluster,spike_train,event_dic,taste_list,b
     for taste in taste_list:
         # get the spike times that are in the range of start-stop from each event.
         spikes = [spike_train[i] - event for i in range(len(spike_train)) for event in event_dic[taste] if start_time < spike_train[i] - event < end_time]
-        hist1,bin_edges = np.histogram(spikes,bin_amount,(start_time,end_time))
+        hist1,bin_edges = np.histogram(spikes,int(bin_amount),(start_time,end_time))
         average_spikes_in_bin = hist1 / float(len(event_dic[taste]))
         if normalize == 'Hz':
             spikes_in_bin = average_spikes_in_bin / bin_width

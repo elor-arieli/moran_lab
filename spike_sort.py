@@ -301,7 +301,7 @@ def seperate_tastes_with_without_laser(taste_events, laser_times, laser_start):
         tastes_with_without_laser['without laser'][taste] = []
         for event in taste_events[taste]:
             # print('event time:',event,'nearest laser time:',find_nearest(laser_times, event), 'difference is:',(find_nearest(laser_times, event) - event))
-            if laser_start - 1 < find_nearest(laser_times, event) - event < laser_start + 1:
+            if laser_start - 5 < find_nearest(laser_times, event) - event < laser_start + 5:
                 tastes_with_without_laser['with laser'][taste].append(event)
                 # print('classified as with laser')
             else:
