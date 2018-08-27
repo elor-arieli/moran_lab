@@ -1,7 +1,6 @@
 __author__ = 'elor'
 
-import numpy as np
-from matplotlib import pyplot as plt
+import numpy as npfrom matplotlib import pyplot as plt
 from klusta.kwik.model import KwikModel
 import os
 from band_pass_filters import butter_bandpass_filter
@@ -9,6 +8,7 @@ from moran_lab.plotter import plot_psth,raster,get_color_for_taste,plot_psth_wit
 from scipy.io import loadmat
 import pickle
 from scipy.stats import ttest_ind as Ttest
+
 # from multi_klusta import get_params_from_file
 # from neural_models import run_HMM
 
@@ -95,7 +95,8 @@ class All_electrodes():
         """
 
         if isinstance(start_val,list):
-            pass
+            file_list = [self.mother_directory + self.base_file_name + "{0:03}".format(
+                i) + '\\' + self.base_file_name + "{0:03}".format(i) + '.kwik' for i in start_val]
         else:
             file_list = [self.mother_directory + self.base_file_name + "{0:03}".format(i) + '\\' + self.base_file_name + "{0:03}".format(i) + '.kwik' for i in range(start_val,stop_val)]
         d = {}
