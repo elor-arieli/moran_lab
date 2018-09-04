@@ -36,11 +36,16 @@ class pickle_loader(object):
         self.get_all_event_and_batch_times(session_start_time)
         self.lfp_FS = lfp_fs
         self.PCA_data_array = create_psth_matrix_for_long_rec(self.data["neurons"],self.data["event_times"])
+        self.event_times_by_batchs = {'water': split_event_times_by_batches(self.data['event_times']['water'],
+                                                                            self.event_times_in_secs['water batch times']),
+                                      'sacc': split_event_times_by_batches(self.data['event_times']['sugar'],
+                                                                           self.event_times_in_secs['sacc batch times'])}
 
     def get_all_event_and_batch_times(self,session_start_time):
         self.event_times_in_secs = {
             'session start': session_start_time[0]*3600+session_start_time[1]*60,
-            'sacc batch times': calc_batch_times(self.data,'sugar')
+            'sacc batch times': calc_batch_times(self.data,'sugar'),
+            'water batch times': calc_batch_times(self.data, 'water'),
         }
 
     def plot_lfp_power_over_time(self,average_every_x_minutes=5, bands_to_plot=['Delta','Theta','Alpha','Beta','Gamma','Fast Gamma'],
@@ -112,7 +117,7 @@ class pickle_loader(object):
             plt.show()
         return
 
-    def plot_average_response_FR_for_batch_responses_dual_taste(self, elec_cluster, style='bars', title='',
+    def average_response_FR_for_batch_responses_dual_taste(self, elec_cluster, style='bars', title='',
                                                                 normalize=False,save_fig=False):
         fig = plt.Figure()
         fig.clf()
@@ -127,6 +132,96 @@ class pickle_loader(object):
         else:
             plt.show()
         return
+
+    def plot_response_power_spectrum(self, taste='sacc', fs=300, band_to_plot='Gamma', len_in_secs=3, save_fig=False):
+        fig = plt.Figure()
+        fig.clf()
+        ax = fig.add_subplot(111)
+        ax, band_power_per_batch, band_std_per_batch = spectrum_power_for_response(ax, self.lfp_data,
+                                                                                   self.event_times_by_batchs[taste],
+                                                                                   fs=fs, band_to_plot=band_to_plot,
+                                                                                   len_in_secs=len_in_secs)
+        if save_fig:
+            fig.savefig('Response power for {} band.jpeg'.format(band_to_plot), format='jpeg')
+            fig.savefig('Response power for {} band.svg'.format(band_to_plot), format='svg')
+        else:
+            plt.show()
+        return band_power_per_batch, band_std_per_batch
+
+
+def spectrum_power_for_response(ax, lfp_data, event_times_by_batch, fs=300,
+                             band_to_plot='Gamma',len_in_secs=3):
+    """
+    drinking session start needs to be in hours
+    """
+
+    lfp_response_mat = []
+    samples_per_event = fs * len_in_secs
+
+    for batch in event_times_by_batch:
+        batch_responses = []
+        for event_time in batch:
+            start_index = event_time*fs
+            stop_index = start_index+samples_per_event
+            batch_responses.append(lfp_data[start_index:stop_index])
+        lfp_response_mat.append(batch_responses)
+
+    power_over_time = {'Delta': [],
+                       'Theta': [],
+                       'Alpha': [],
+                       'Beta': [],
+                       'Gamma': [],
+                       'Fast Gamma': []}
+
+    eeg_bands = {'Delta': (1, 4),
+                 'Theta': (4, 8),
+                 'Alpha': (8, 12),
+                 'Beta': (12, 30),
+                 'Gamma': (30, 45),
+                 'Fast Gamma': (45, 120)}
+
+    # Get real amplitudes of FFT (only in postive frequencies)
+    band_power_per_batch = []
+    band_std_per_batch = []
+
+    for batch in lfp_response_mat:
+        powers = []
+        for event_response in batch:
+            fft_vals = np.absolute(np.fft.rfft(event_response))
+
+            # Get frequencies for amplitudes in Hz
+            fft_freq = np.fft.rfftfreq(len(event_response), 1.0 / fs)
+
+            # Take the mean of the fft amplitude for each EEG band
+                #             print('addint to band {}'.format(band))
+            freq_ix = np.where((fft_freq >= eeg_bands[band_to_plot][0]) &
+                               (fft_freq <= eeg_bands[band_to_plot][1]))[0]
+            powers.append(np.mean(fft_vals[freq_ix]))
+        band_power_per_batch.append(np.mean(powers))
+        band_std_per_batch.append(np.std(powers)/np.sqrt(len(powers)))
+
+    left_edges_BL = np.arange(len(band_power_per_batch)) * 0.45 + 0.1
+
+    bar_width = 0.35
+    opacity = 0.8
+
+    error_config = {'ecolor': '0.3'}
+
+    rects1 = ax.bar(left_edges_BL, band_power_per_batch, bar_width,
+                     alpha=opacity, yerr=band_std_per_batch,
+                     error_kw=error_config, label='{} response'.format(band_to_plot))
+
+    ax.set_xticks(left_edges_BL + bar_width / 2.0)
+    ax.set_xticklabels([str(i) for i in range(len(band_power_per_batch))])
+
+    ax.set_xlabel("Batch", fontsize=18)
+    ax.set_ylabel("Mean band Amplitude", fontsize=18)
+    #     ax.legend()
+    legend = ax.legend(fontsize=18, loc='upper right', shadow=True)
+
+    # Put a nicer background color on the legend.
+    legend.get_frame().set_facecolor('#ffffff')
+    return ax, band_power_per_batch,band_std_per_batch
 
 def plot_average_response_FR_for_batch_responses_dual_taste(ax1, pca_data_array, neuron_num, style='bars',title='', normalize=False):
     """
@@ -423,6 +518,17 @@ def calc_batch_times(dic,taste):
     diffs = dic['event_times'][taste][1:] - dic['event_times'][taste][:-1]
     change_locs = np.array(np.where(diffs > 300)) + 1
     return dic['event_times'][taste][change_locs[0]]
+
+def split_event_times_by_batches(event_times, batch_times):
+    mat = []
+    previous = 0
+    for current in batch_times:
+        this_batch_times = [i for i in event_times if previous < i < current]
+        mat.append(this_batch_times)
+        previous = current
+    last_batch = [i for i in event_times if previous < i]
+    mat.append(last_batch)
+    return mat
 
 def create_psth_matrix_for_long_rec(all_neurons_spike_times, event_dic, taste_list=('water','sugar'),bad_elec_list=[]):
     matrix_dic = []
