@@ -148,6 +148,30 @@ class pickle_loader(object):
             plt.show()
         return band_power_per_batch, band_std_per_batch
 
+    def plot_and_save_multiple_lfp_bands_BL_and_response(self, average_every_x_minutes=5,
+                                                         bands_to_plot=['Delta','Theta','Alpha','Beta','Gamma','Fast Gamma'],
+                                                         smooth=True, taste='sacc', len_in_secs=3):
+        for band in bands_to_plot:
+            self.plot_lfp_power_over_time(average_every_x_minutes=average_every_x_minutes,
+                                          bands_to_plot=[band], smooth=smooth, save_fig=True)
+
+            self.plot_response_power_spectrum(taste=taste, fs=self.lfp_FS, bands_to_plot=band,
+                                              len_in_secs=len_in_secs, save_fig=True)
+        return
+
+    def plot_and_save_BL_and_response_FR_for_all_neurons(self, bin_size_in_secs=300, plot_batch_times=True, style='bars'):
+        for neuron in self.data['neurons']:
+            elec_cluster = (neuron[0],neuron[1])
+
+            self.BL_FR_analysis(elec_cluster=elec_cluster, bin_size_in_secs=bin_size_in_secs,
+                                plot_batch_times=plot_batch_times, save_fig=True)
+
+            self.average_response_FR_for_batch_responses_dual_taste(elec_cluster=elec_cluster,
+                                                                    style=style, save_fig=True)
+        return
+
+
+
 
 def spectrum_power_for_response(ax, lfp_data, event_times_by_batch, fs=300,
                              band_to_plot='Gamma',len_in_secs=3):
