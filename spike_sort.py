@@ -1,6 +1,7 @@
 __author__ = 'elor'
 
-import numpy as npfrom matplotlib import pyplot as plt
+import numpy as np
+from matplotlib import pyplot as plt
 from klusta.kwik.model import KwikModel
 import os
 from band_pass_filters import butter_bandpass_filter
@@ -67,7 +68,7 @@ class All_electrodes():
     plot_psth(All_electrodes.electrodes[21].spike_times_by_cluster[12],All_electrodes.event_times)
     """
 
-    def __init__(self,mother_directory=None,base_file_name='amp-A-',start_val=0,stop_val=32,get_events=False,get_laser=False,event_list=['water','sugar','nacl','CA']):
+    def __init__(self,mother_directory=None,base_file_name='amp-A-',start_val=0,stop_val=32,get_events=False,get_laser=False,event_list=['water','sugar','nacl','CA'],fs=30000):
         self.base_file_name = base_file_name
         if mother_directory == None:
             mother_directory = os.getcwd()
@@ -80,7 +81,7 @@ class All_electrodes():
         self.event_times = False
         if get_events:
             if isinstance(event_list,(list,np.array,np.ndarray)):
-                self.event_times = get_all_events_from_directory(self.mother_directory,event_list)
+                self.event_times = get_all_events_from_directory(self.mother_directory,event_list,fs=fs)
             else:
                 print ('event_list should be a list of strings cooresponding to taste file names')
         print('model created, these are the the good cluster and their corresponding electrodes: {}'.format(self.show_all_good_clusters()))
@@ -325,7 +326,7 @@ def get_event_time(event_file,sampling_rate=30000):
     event_times = event_indexs[0] / float(sampling_rate)
     return event_times
 
-def get_all_events_from_directory(directory_path=None,event_list=['water','sugar','nacl','CA']):
+def get_all_events_from_directory(directory_path=None,event_list=['water','sugar','nacl','CA'],fs=30000):
     """
     gets all events times from the list given.
     returns a dictionary with the tastes as keys and array of event times in seconds as value
@@ -340,7 +341,7 @@ def get_all_events_from_directory(directory_path=None,event_list=['water','sugar
     for taste in event_list:
         print (taste)
         taste_file = directory_path + taste + ".dat"
-        event_dic[taste] = get_event_time(taste_file)
+        event_dic[taste] = get_event_time(taste_file,sampling_rate=fs)
     return event_dic
 
 def get_data_from_mat_file(file):
