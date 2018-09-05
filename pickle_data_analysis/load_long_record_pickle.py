@@ -50,10 +50,10 @@ class pickle_loader(object):
 
     def plot_lfp_power_over_time(self,average_every_x_minutes=5, bands_to_plot=['Delta','Theta','Alpha','Beta','Gamma','Fast Gamma'],
                                  smooth=True,save_fig=False):
-        if not self.lfp_data:
+        if self.lfp_data is False:
             print('no LFP data file')
             return
-        fig = plt.Figure()
+        fig = plt.figure()
         fig.clf()
         ax = fig.add_subplot(111)
         drinking_session_start = self.event_times_in_secs['session start']/3600
@@ -71,7 +71,7 @@ class pickle_loader(object):
     def plot_PCA_2D_for_batch_responses_dual_taste(self, elec_cluster, taste='both', title='',
                                                    normalize=False, save_fig=False):
         neuron_num = get_neuron_num_from_dic(self.data, elec_cluster[0], elec_cluster[1])
-        fig = plt.Figure()
+        fig = plt.figure()
         fig.clf()
         ax = fig.add_subplot(111)
         ax, distances, distances_2d = PCA_2D_for_batch_responses_dual_taste(ax, self.PCA_data_array, neuron_num,
@@ -84,7 +84,7 @@ class pickle_loader(object):
         return distances, distances_2d
 
     def psth_over_time_for_neuron(self, elec_cluster, taste='sugar', start_batch=0, stop_batch=30, save_fig=False):
-        fig = plt.Figure()
+        fig = plt.figure()
         fig.clf()
         ax = fig.add_subplot(111)
         neuron_num = get_neuron_num_from_dic(self.data, elec_cluster[0], elec_cluster[1])
@@ -99,7 +99,7 @@ class pickle_loader(object):
         return
 
     def BL_FR_analysis(self, elec_cluster, bin_size_in_secs=300, plot_batch_times=True, save_fig=False):
-        fig = plt.Figure()
+        fig = plt.figure()
         fig.clf()
         ax = fig.add_subplot(111)
         neuron_num = get_neuron_num_from_dic(self.data, elec_cluster[0], elec_cluster[1])
@@ -119,7 +119,7 @@ class pickle_loader(object):
 
     def average_response_FR_for_batch_responses_dual_taste(self, elec_cluster, style='bars', title='',
                                                                 normalize=False,save_fig=False):
-        fig = plt.Figure()
+        fig = plt.figure()
         fig.clf()
         ax = fig.add_subplot(111)
         neuron_num = get_neuron_num_from_dic(self.data, elec_cluster[0], elec_cluster[1])
@@ -133,14 +133,19 @@ class pickle_loader(object):
             plt.show()
         return
 
-    def plot_response_power_spectrum(self, taste='sacc', fs=300, band_to_plot='Gamma', len_in_secs=3, save_fig=False):
-        fig = plt.Figure()
+    def plot_response_power_spectrum(self, taste='sacc', fs=300, band_to_plot='Gamma', len_in_secs=3, save_fig=False, debug=False):
+        fig = plt.figure()
         fig.clf()
         ax = fig.add_subplot(111)
+        if self.lfp_data is False:
+            print('no LFP data file')
+            return
+
         ax, band_power_per_batch, band_std_per_batch = spectrum_power_for_response(ax, self.lfp_data,
                                                                                    self.event_times_by_batchs[taste],
                                                                                    fs=fs, band_to_plot=band_to_plot,
-                                                                                   len_in_secs=len_in_secs)
+                                                                                   len_in_secs=len_in_secs,debug=debug)
+
         if save_fig:
             fig.savefig('Response power for {} band.jpeg'.format(band_to_plot), format='jpeg')
             fig.savefig('Response power for {} band.svg'.format(band_to_plot), format='svg')
@@ -174,7 +179,7 @@ class pickle_loader(object):
 
 
 def spectrum_power_for_response(ax, lfp_data, event_times_by_batch, fs=300,
-                             band_to_plot='Gamma',len_in_secs=3):
+                             band_to_plot='Gamma',len_in_secs=3, debug=False):
     """
     drinking session start needs to be in hours
     """
@@ -185,11 +190,15 @@ def spectrum_power_for_response(ax, lfp_data, event_times_by_batch, fs=300,
     for batch in event_times_by_batch:
         batch_responses = []
         for event_time in batch:
-            start_index = event_time*fs
-            stop_index = start_index+samples_per_event
+            start_index = int(event_time*fs)
+            stop_index = int(start_index+samples_per_event)
             batch_responses.append(lfp_data[start_index:stop_index])
         lfp_response_mat.append(batch_responses)
-
+    if debug:
+        print('ax')
+        print(ax)
+        print('lfp response mat')
+        print(lfp_response_mat)
     power_over_time = {'Delta': [],
                        'Theta': [],
                        'Alpha': [],

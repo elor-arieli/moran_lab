@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8932ca1c-b891-493b-a39a-bd3f31b54520" name="Default" comment="">
+    <list default="true" id="8932ca1c-b891-493b-a39a-bd3f31b54520" name="Default" comment="04/09/18 - added multiple ploters for all neuron FR and all lfp bands.">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pickle_data_analysis/load_long_record_pickle.py" afterPath="$PROJECT_DIR$/pickle_data_analysis/load_long_record_pickle.py" />
     </list>
@@ -95,32 +95,23 @@
       <file leaf-file-name="load_long_record_pickle.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pickle_data_analysis/load_long_record_pickle.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="525">
-              <caret line="152" column="99" selection-start-line="152" selection-start-column="99" selection-end-line="152" selection-end-column="99" />
+            <state relative-caret-position="238">
+              <caret line="211" column="34" selection-start-line="211" selection-start-column="34" selection-end-line="211" selection-end-column="34" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
-                <element signature="e#1935#2195#0" expanded="false" />
-                <element signature="e#2401#3403#0" expanded="false" />
-                <element signature="e#3593#4254#0" expanded="false" />
-                <element signature="e#4380#4979#0" expanded="false" />
-                <element signature="e#5094#5945#0" expanded="false" />
-                <element signature="e#6155#6829#0" expanded="false" />
-                <element signature="e#9261#11839#0" expanded="false" />
-                <element signature="e#11979#17706#0" expanded="false" />
-                <element signature="e#17835#18749#0" expanded="false" />
-                <element signature="e#20215#24673#0" expanded="false" />
-                <element signature="e#24712#24889#0" expanded="false" />
-                <element signature="e#25380#26922#0" expanded="false" />
-                <element signature="e#27198#29959#0" expanded="false" />
-                <element signature="e#30025#32988#0" expanded="false" />
-                <element signature="e#33045#33175#0" expanded="false" />
-                <element signature="e#33245#33342#0" expanded="false" />
-                <element signature="e#33615#33821#0" expanded="false" />
-                <element signature="e#33896#34438#0" expanded="false" />
-                <marker date="1536055391762" expanded="false" signature="6949:7775" placeholder="..." />
-                <marker date="1536055391762" expanded="false" signature="18857:20092" placeholder="..." />
-                <marker date="1536055391762" expanded="false" signature="24950:25254" placeholder="..." />
-                <marker date="1536055391762" expanded="false" signature="33390:33562" placeholder="..." />
+                <element signature="e#869#1861#0" expanded="false" />
+                <element signature="e#12243#17970#0" expanded="false" />
+                <element signature="e#18099#19013#0" expanded="false" />
+                <element signature="e#20479#24937#0" expanded="false" />
+                <element signature="e#27462#30223#0" expanded="false" />
+                <element signature="e#30289#33252#0" expanded="false" />
+                <element signature="e#33309#33439#0" expanded="false" />
+                <element signature="e#33509#33606#0" expanded="false" />
+                <element signature="e#33879#34085#0" expanded="false" />
+                <element signature="e#34160#34702#0" expanded="false" />
+                <marker date="1536151600124" expanded="false" signature="19121:20356" placeholder="..." />
+                <marker date="1536151600124" expanded="false" signature="25214:25518" placeholder="..." />
+                <marker date="1536151600124" expanded="false" signature="33654:33826" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -233,6 +224,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="moran_lab" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="moran_lab" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="moran_lab" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pickle_data_analysis" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -445,7 +450,14 @@
       <option name="project" value="LOCAL" />
       <updated>1536054646648</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="04/09/18 - added multiple ploters for all neuron FR and all lfp bands.">
+      <created>1536055434060</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1536055434060</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TodoView">
@@ -463,7 +475,8 @@
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.101685986" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22426869" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32827735" sideWeight="0.5021075" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32827735" sideWeight="0.49789253" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32827735" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32394367" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -476,7 +489,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -523,7 +535,8 @@
     <MESSAGE value="28/08/18 - added long record pickle reader with preliminary plotting functions" />
     <MESSAGE value="04/09/18 - added to long record pickle reader batch response LFP power plotter.&#10;plotting functions now encompass:&#10;lfp power over time&#10;lfp response power over batchs&#10;2D PCA over batchs for single or dual tastes&#10;baseline firing rate analysis over time&#10;reponse firing rate in lines or bars over batchs&#10;PSTHs over time for a single taste" />
     <MESSAGE value="04/09/18 - fixed spike_sort issue with pulling event times when Fs is not 30KHz" />
-    <option name="LAST_COMMIT_MESSAGE" value="04/09/18 - fixed spike_sort issue with pulling event times when Fs is not 30KHz" />
+    <MESSAGE value="04/09/18 - added multiple ploters for all neuron FR and all lfp bands." />
+    <option name="LAST_COMMIT_MESSAGE" value="04/09/18 - added multiple ploters for all neuron FR and all lfp bands." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -947,32 +960,23 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pickle_data_analysis/load_long_record_pickle.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="152" column="99" selection-start-line="152" selection-start-column="99" selection-end-line="152" selection-end-column="99" />
+        <state relative-caret-position="238">
+          <caret line="211" column="34" selection-start-line="211" selection-start-column="34" selection-end-line="211" selection-end-column="34" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
-            <element signature="e#1935#2195#0" expanded="false" />
-            <element signature="e#2401#3403#0" expanded="false" />
-            <element signature="e#3593#4254#0" expanded="false" />
-            <element signature="e#4380#4979#0" expanded="false" />
-            <element signature="e#5094#5945#0" expanded="false" />
-            <element signature="e#6155#6829#0" expanded="false" />
-            <element signature="e#9261#11839#0" expanded="false" />
-            <element signature="e#11979#17706#0" expanded="false" />
-            <element signature="e#17835#18749#0" expanded="false" />
-            <element signature="e#20215#24673#0" expanded="false" />
-            <element signature="e#24712#24889#0" expanded="false" />
-            <element signature="e#25380#26922#0" expanded="false" />
-            <element signature="e#27198#29959#0" expanded="false" />
-            <element signature="e#30025#32988#0" expanded="false" />
-            <element signature="e#33045#33175#0" expanded="false" />
-            <element signature="e#33245#33342#0" expanded="false" />
-            <element signature="e#33615#33821#0" expanded="false" />
-            <element signature="e#33896#34438#0" expanded="false" />
-            <marker date="1536055391762" expanded="false" signature="6949:7775" placeholder="..." />
-            <marker date="1536055391762" expanded="false" signature="18857:20092" placeholder="..." />
-            <marker date="1536055391762" expanded="false" signature="24950:25254" placeholder="..." />
-            <marker date="1536055391762" expanded="false" signature="33390:33562" placeholder="..." />
+            <element signature="e#869#1861#0" expanded="false" />
+            <element signature="e#12243#17970#0" expanded="false" />
+            <element signature="e#18099#19013#0" expanded="false" />
+            <element signature="e#20479#24937#0" expanded="false" />
+            <element signature="e#27462#30223#0" expanded="false" />
+            <element signature="e#30289#33252#0" expanded="false" />
+            <element signature="e#33309#33439#0" expanded="false" />
+            <element signature="e#33509#33606#0" expanded="false" />
+            <element signature="e#33879#34085#0" expanded="false" />
+            <element signature="e#34160#34702#0" expanded="false" />
+            <marker date="1536151600124" expanded="false" signature="19121:20356" placeholder="..." />
+            <marker date="1536151600124" expanded="false" signature="25214:25518" placeholder="..." />
+            <marker date="1536151600124" expanded="false" signature="33654:33826" placeholder="..." />
           </folding>
         </state>
       </provider>
