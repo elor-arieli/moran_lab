@@ -9,7 +9,7 @@ from moran_lab.plotter import plot_psth,raster,get_color_for_taste,plot_psth_wit
 from scipy.io import loadmat
 import pickle
 from scipy.stats import ttest_ind as Ttest
-
+print('site-packages')
 # from multi_klusta import get_params_from_file
 # from neural_models import run_HMM
 
@@ -68,7 +68,7 @@ class All_electrodes():
     plot_psth(All_electrodes.electrodes[21].spike_times_by_cluster[12],All_electrodes.event_times)
     """
 
-    def __init__(self,mother_directory=None,base_file_name='amp-A-',start_val=0,stop_val=32,get_events=False,get_laser=False,event_list=['water','sugar','nacl','CA'],fs=30000):
+    def __init__(self,mother_directory=None,base_file_name='amp-A-',start_val=0,stop_val=32,get_events=False,get_laser=False,event_list=['water','sugar','nacl','CA'],fs=30000,use_memmap=True):
         self.base_file_name = base_file_name
         if mother_directory == None:
             mother_directory = os.getcwd()
@@ -81,7 +81,7 @@ class All_electrodes():
         self.event_times = False
         if get_events:
             if isinstance(event_list,(list,np.array,np.ndarray)):
-                self.event_times = get_all_events_from_directory(self.mother_directory,event_list,fs=fs)
+                self.event_times = get_all_events_from_directory(self.mother_directory,event_list,fs=fs,use_memmap=use_memmap)
             else:
                 print ('event_list should be a list of strings cooresponding to taste file names')
         print('model created, these are the the good cluster and their corresponding electrodes: {}'.format(self.show_all_good_clusters()))
@@ -315,18 +315,21 @@ def seperate_tastes_with_without_laser(taste_events, laser_times, laser_start):
     #         print '%s: %s' % (key2, len(tastes_with_without_laser[key1][key2]))
     return tastes_with_without_laser
 
-def get_event_time(event_file,sampling_rate=30000):
+def get_event_time(event_file,sampling_rate=30000,use_memmap=True):
     """
     extracts event times from a .dat file of a digital input signal
     returns an array of event times in seconds
     """
 
-    event_array = np.fromfile(event_file,dtype=np.uint16)
+    if use_memmap:
+        event_array = np.memmap(event_file,dtype=np.uint16,mode='r')
+    else:
+        event_array = np.fromfile(event_file, dtype=np.uint16)
     event_indexs = np.where(event_array[1:]-event_array[:-1] == 1)
     event_times = event_indexs[0] / float(sampling_rate)
     return event_times
 
-def get_all_events_from_directory(directory_path=None,event_list=['water','sugar','nacl','CA'],fs=30000):
+def get_all_events_from_directory(directory_path=None,event_list=['water','sugar','nacl','CA'],fs=30000,use_memmap=True):
     """
     gets all events times from the list given.
     returns a dictionary with the tastes as keys and array of event times in seconds as value
@@ -341,7 +344,7 @@ def get_all_events_from_directory(directory_path=None,event_list=['water','sugar
     for taste in event_list:
         print (taste)
         taste_file = directory_path + taste + ".dat"
-        event_dic[taste] = get_event_time(taste_file,sampling_rate=fs)
+        event_dic[taste] = get_event_time(taste_file,sampling_rate=fs,use_memmap=use_memmap)
     return event_dic
 
 def get_data_from_mat_file(file):

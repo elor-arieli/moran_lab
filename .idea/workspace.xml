@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8932ca1c-b891-493b-a39a-bd3f31b54520" name="Default" comment="04/09/18 - added multiple ploters for all neuron FR and all lfp bands.">
+    <list default="true" id="8932ca1c-b891-493b-a39a-bd3f31b54520" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pickle_data_analysis/load_long_record_pickle.py" afterPath="$PROJECT_DIR$/pickle_data_analysis/load_long_record_pickle.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spike_sort.py" afterPath="$PROJECT_DIR$/spike_sort.py" />
     </list>
     <ignored path="moran_lab.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,10 +29,22 @@
       <file leaf-file-name="spike_sort.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/spike_sort.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4845">
-              <caret line="345" column="0" selection-start-line="345" selection-start-column="0" selection-end-line="345" selection-end-column="0" />
+            <state relative-caret-position="445">
+              <caret line="331" column="22" selection-start-line="331" selection-start-column="22" selection-end-line="331" selection-end-column="22" />
               <folding>
                 <element signature="e#21#39#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="plotter.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/plotter.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="6120">
+              <caret line="366" column="0" selection-start-line="366" selection-start-column="0" selection-end-line="373" selection-end-column="10" />
+              <folding>
+                <element signature="e#21#65#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -39,22 +53,10 @@
       <file leaf-file-name="lfp_functions.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pickle_data_analysis/lfp_functions.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
+            <state relative-caret-position="34">
               <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pyeeg.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../pyeeg.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="34" selection-end-column="11" />
-              <folding>
-                <element signature="e#831#856#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -72,16 +74,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pickle_data_analysis/__init__.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="pickle_data_analysis.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pickle_data_analysis.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -95,24 +87,39 @@
       <file leaf-file-name="load_long_record_pickle.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pickle_data_analysis/load_long_record_pickle.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="211" column="34" selection-start-line="211" selection-start-column="34" selection-end-line="211" selection-end-column="34" />
+            <state relative-caret-position="325">
+              <caret line="89" column="21" selection-start-line="89" selection-start-column="21" selection-end-line="89" selection-end-column="21" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
-                <element signature="e#869#1861#0" expanded="false" />
-                <element signature="e#12243#17970#0" expanded="false" />
-                <element signature="e#18099#19013#0" expanded="false" />
-                <element signature="e#20479#24937#0" expanded="false" />
-                <element signature="e#27462#30223#0" expanded="false" />
-                <element signature="e#30289#33252#0" expanded="false" />
-                <element signature="e#33309#33439#0" expanded="false" />
-                <element signature="e#33509#33606#0" expanded="false" />
-                <element signature="e#33879#34085#0" expanded="false" />
-                <element signature="e#34160#34702#0" expanded="false" />
-                <marker date="1536151600124" expanded="false" signature="19121:20356" placeholder="..." />
-                <marker date="1536151600124" expanded="false" signature="25214:25518" placeholder="..." />
-                <marker date="1536151600124" expanded="false" signature="33654:33826" placeholder="..." />
+                <element signature="e#15776#21503#0" expanded="false" />
+                <element signature="e#21632#22546#0" expanded="false" />
+                <element signature="e#31737#32036#0" expanded="false" />
+                <element signature="e#33980#36741#0" expanded="false" />
+                <element signature="e#36807#39770#0" expanded="false" />
+                <element signature="e#39827#39957#0" expanded="false" />
+                <element signature="e#40027#40124#0" expanded="false" />
+                <element signature="e#40177#40344#0" expanded="false" />
+                <element signature="e#40397#40603#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="tester.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pickle_data_analysis/tester.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="119">
+              <caret line="7" column="67" selection-start-line="7" selection-start-column="67" selection-end-line="7" selection-end-column="67" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="algorithm tester.ipynb" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/algorithm tester.ipynb">
+          <provider selected="true" editor-type-id="ipnb-editor">
+            <state>
+              <selected id="1" />
             </state>
           </provider>
         </entry>
@@ -133,8 +140,8 @@
       <file leaf-file-name="multi_klusta.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/multi_klusta.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2117">
-              <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+            <state relative-caret-position="747">
+              <caret line="177" column="26" selection-start-line="177" selection-start-column="24" selection-end-line="177" selection-end-column="26" />
               <folding>
                 <element signature="e#21#30#0" expanded="true" />
               </folding>
@@ -148,6 +155,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Python Script" />
+        <option value="Jupyter Notebook" />
       </list>
     </option>
   </component>
@@ -167,6 +175,9 @@
         <option value="$PROJECT_DIR$/pickle_data_analysis.py" />
         <option value="$PROJECT_DIR$/pickle_spike_train_analysis.py" />
         <option value="$PROJECT_DIR$/multi_klusta.py" />
+        <option value="$PROJECT_DIR$/pickle_data_analysis/tester.py" />
+        <option value="$PROJECT_DIR$/algorithm testing.ipynb" />
+        <option value="$PROJECT_DIR$/algorithm tester.ipynb" />
         <option value="$PROJECT_DIR$/spike_sort.py" />
         <option value="$PROJECT_DIR$/pickle_data_analysis/load_long_record_pickle.py" />
       </list>
@@ -209,6 +220,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -243,12 +256,10 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$USER_HOME$/PycharmProjects/HMM_for_neural_data" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../klustakwik2" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -265,7 +276,24 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.tester">
+    <configuration default="false" name="tester" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/pickle_data_analysis" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="moran_lab" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pickle_data_analysis/tester.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -400,6 +428,14 @@
       <option name="USE_KEYWORD" value="false" />
       <method />
     </configuration>
+    <list size="1">
+      <item index="0" class="java.lang.String" itemvalue="Python.tester" />
+    </list>
+    <recent_temporary>
+      <list size="1">
+        <item index="0" class="java.lang.String" itemvalue="Python.tester" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
@@ -457,7 +493,14 @@
       <option name="project" value="LOCAL" />
       <updated>1536055434060</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="05/09/18 - fixed plotting issue">
+      <created>1536152261651</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1536152261651</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TodoView">
@@ -475,13 +518,13 @@
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.101685986" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32827735" sideWeight="0.5021075" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32827735" sideWeight="0.49789253" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32827735" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.36037934" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32827735" sideWeight="0.49789253" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32827735" sideWeight="0.49789253" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32394367" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32827735" sideWeight="0.63962066" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32827735" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32827735" sideWeight="0.49789253" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -536,34 +579,16 @@
     <MESSAGE value="04/09/18 - added to long record pickle reader batch response LFP power plotter.&#10;plotting functions now encompass:&#10;lfp power over time&#10;lfp response power over batchs&#10;2D PCA over batchs for single or dual tastes&#10;baseline firing rate analysis over time&#10;reponse firing rate in lines or bars over batchs&#10;PSTHs over time for a single taste" />
     <MESSAGE value="04/09/18 - fixed spike_sort issue with pulling event times when Fs is not 30KHz" />
     <MESSAGE value="04/09/18 - added multiple ploters for all neuron FR and all lfp bands." />
-    <option name="LAST_COMMIT_MESSAGE" value="04/09/18 - added multiple ploters for all neuron FR and all lfp bands." />
+    <MESSAGE value="05/09/18 - fixed plotting issue" />
+    <option name="LAST_COMMIT_MESSAGE" value="05/09/18 - fixed plotting issue" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/plotter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/band_pass_filters.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/matlab_data_analyzer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/spike_sort.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1071">
@@ -837,13 +862,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/plotter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/matlab_data_analyzer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -862,7 +880,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -870,7 +887,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -879,7 +895,7 @@
         <state relative-caret-position="510">
           <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="34" selection-end-column="11" />
           <folding>
-            <element signature="e#831#856#0" expanded="true" />
+            <element signature="e#831#856#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -914,10 +930,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pickle_data_analysis/lfp_functions.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
+        <state relative-caret-position="34">
           <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
           <folding>
             <element signature="e#0#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../os.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plotter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6120">
+          <caret line="366" column="0" selection-start-line="366" selection-start-column="0" selection-end-line="373" selection-end-column="10" />
+          <folding>
+            <element signature="e#21#65#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -930,18 +964,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../os.py">
+    <entry file="file://$PROJECT_DIR$/pickle_data_analysis/tester.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="119">
+          <caret line="7" column="67" selection-start-line="7" selection-start-column="67" selection-end-line="7" selection-end-column="67" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/algorithm testing.ipynb">
+      <provider selected="true" editor-type-id="ipnb-editor">
+        <state>
+          <selected id="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/algorithm tester.ipynb">
+      <provider selected="true" editor-type-id="ipnb-editor">
+        <state>
+          <selected id="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/multi_klusta.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2117">
-          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+        <state relative-caret-position="747">
+          <caret line="177" column="26" selection-start-line="177" selection-start-column="24" selection-end-line="177" selection-end-column="26" />
           <folding>
             <element signature="e#21#30#0" expanded="true" />
           </folding>
@@ -950,8 +998,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/spike_sort.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4845">
-          <caret line="345" column="0" selection-start-line="345" selection-start-column="0" selection-end-line="345" selection-end-column="0" />
+        <state relative-caret-position="445">
+          <caret line="331" column="22" selection-start-line="331" selection-start-column="22" selection-end-line="331" selection-end-column="22" />
           <folding>
             <element signature="e#21#39#0" expanded="true" />
           </folding>
@@ -960,23 +1008,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pickle_data_analysis/load_long_record_pickle.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="211" column="34" selection-start-line="211" selection-start-column="34" selection-end-line="211" selection-end-column="34" />
+        <state relative-caret-position="325">
+          <caret line="89" column="21" selection-start-line="89" selection-start-column="21" selection-end-line="89" selection-end-column="21" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
-            <element signature="e#869#1861#0" expanded="false" />
-            <element signature="e#12243#17970#0" expanded="false" />
-            <element signature="e#18099#19013#0" expanded="false" />
-            <element signature="e#20479#24937#0" expanded="false" />
-            <element signature="e#27462#30223#0" expanded="false" />
-            <element signature="e#30289#33252#0" expanded="false" />
-            <element signature="e#33309#33439#0" expanded="false" />
-            <element signature="e#33509#33606#0" expanded="false" />
-            <element signature="e#33879#34085#0" expanded="false" />
-            <element signature="e#34160#34702#0" expanded="false" />
-            <marker date="1536151600124" expanded="false" signature="19121:20356" placeholder="..." />
-            <marker date="1536151600124" expanded="false" signature="25214:25518" placeholder="..." />
-            <marker date="1536151600124" expanded="false" signature="33654:33826" placeholder="..." />
+            <element signature="e#15776#21503#0" expanded="false" />
+            <element signature="e#21632#22546#0" expanded="false" />
+            <element signature="e#31737#32036#0" expanded="false" />
+            <element signature="e#33980#36741#0" expanded="false" />
+            <element signature="e#36807#39770#0" expanded="false" />
+            <element signature="e#39827#39957#0" expanded="false" />
+            <element signature="e#40027#40124#0" expanded="false" />
+            <element signature="e#40177#40344#0" expanded="false" />
+            <element signature="e#40397#40603#0" expanded="false" />
           </folding>
         </state>
       </provider>

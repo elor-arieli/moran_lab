@@ -7,11 +7,12 @@ from mpl_toolkits.mplot3d import proj3d
 from matplotlib.mlab import PCA
 from scipy.spatial import distance
 import os
-from band_pass_filters import butter_bandpass_filter
+# from band_pass_filters import butter_bandpass_filter
 from scipy.io import loadmat
 from scipy.stats import ttest_ind as Ttest
 from scipy.signal import butter, lfilter
 from math import factorial
+from moran_lab.plotter import adjust_ylim
 
 plt.rcParams['axes.facecolor']='white'
 plt.rcParams['savefig.facecolor']='white'
@@ -83,6 +84,40 @@ class pickle_loader(object):
             plt.show()
         return distances, distances_2d
 
+    def plot_and_save_BL_FR_for_all_neurons(self, bin_size_in_secs=300, plot_batch_times=True):
+        for data in self.data['neurons']:
+            fig = plt.figure(figsize=(20, 15), dpi=1000)
+            fig.clf()
+            ax = fig.add_subplot(111)
+            N0FR = data[2]
+            session_start = self.event_times_in_secs['session start'] / 3600
+
+            batch_times_in_hours = self.event_times_in_secs['sacc batch times'] / 3600
+            ax = plot_BL_FR_analysis(ax, N0FR, batch_times_in_hours, bin_size_in_secs=bin_size_in_secs,
+                                     plot_batch_times=plot_batch_times, session_start=session_start)
+
+            fig.savefig('BaseLine FR for {}-{}.jpeg'.format(data[0], data[1]), format='jpeg')
+            fig.savefig('BaseLine FR for {}-{}.svg'.format(data[0], data[1]), format='svg')
+        return
+
+    def plot_PCA_2D_for_population_batch_responses(self, elec_cluster_list, taste='sacc', title='',normalize=False, save_fig=False):
+        """ elec_cluster_list is a list of elec-cluster tuples"""
+        neuron_num_list = []
+        for elec_cluster in elec_cluster_list:
+            neuron_num_list.append(get_neuron_num_from_dic(self.data, elec_cluster[0], elec_cluster[1]))
+        fig = plt.figure()
+        fig.clf()
+        ax = fig.add_subplot(111)
+        ax = PCA_2D_for_population_batch_responses(self, ax, self.PCA_data_array, neuron_num_list, taste=taste,
+                                                        title=title, normalize=normalize)
+
+        if save_fig:
+            fig.savefig('population response PCA over batchs for {}.jpeg'.format(taste), format='jpeg')
+            fig.savefig('population response PCA over batchs for {}.svg'.format(taste), format='svg')
+        else:
+            plt.show()
+        return
+
     def psth_over_time_for_neuron(self, elec_cluster, taste='sugar', start_batch=0, stop_batch=30, save_fig=False):
         fig = plt.figure()
         fig.clf()
@@ -153,6 +188,40 @@ class pickle_loader(object):
             plt.show()
         return band_power_per_batch, band_std_per_batch
 
+    def plot_response_power_spectrum_dual_taste(self, fs=300, band_to_plot='Gamma',
+                                                len_in_secs=3, save_fig=False, debug=False):
+        fig = plt.figure(figsize=(16,10))
+        fig.clf()
+        ax1 = fig.add_subplot(121)
+        ax2 = fig.add_subplot(122)
+        ax1.set_title('Sacc')
+        ax2.set_title('Water')
+
+        if self.lfp_data is False:
+            print('no LFP data file')
+            return
+
+        dic = {}
+
+        ax1, dic['sacc power'], dic['sacc std'] = spectrum_power_for_response(ax1, self.lfp_data,
+                                                                                   self.event_times_by_batchs['sacc'],
+                                                                                   fs=fs, band_to_plot=band_to_plot,
+                                                                                   len_in_secs=len_in_secs, debug=debug)
+
+        ax2, dic['water power'], dic['water std'] = spectrum_power_for_response(ax2, self.lfp_data,
+                                                                                   self.event_times_by_batchs['water'],
+                                                                                   fs=fs, band_to_plot=band_to_plot,
+                                                                                   len_in_secs=len_in_secs, debug=debug)
+
+        adjust_ylim(ax1,ax2)
+
+        if save_fig:
+            fig.savefig('Response power for {} band.jpeg'.format(band_to_plot), format='jpeg')
+            fig.savefig('Response power for {} band.svg'.format(band_to_plot), format='svg')
+        else:
+            plt.show()
+        return dic
+
     def plot_and_save_multiple_lfp_bands_BL_and_response(self, average_every_x_minutes=5,
                                                          bands_to_plot=['Delta','Theta','Alpha','Beta','Gamma','Fast Gamma'],
                                                          smooth=True, taste='sacc', len_in_secs=3):
@@ -160,7 +229,7 @@ class pickle_loader(object):
             self.plot_lfp_power_over_time(average_every_x_minutes=average_every_x_minutes,
                                           bands_to_plot=[band], smooth=smooth, save_fig=True)
 
-            self.plot_response_power_spectrum(taste=taste, fs=self.lfp_FS, bands_to_plot=band,
+            self.plot_response_power_spectrum(taste=taste, fs=self.lfp_FS, band_to_plot=band,
                                               len_in_secs=len_in_secs, save_fig=True)
         return
 
@@ -194,11 +263,13 @@ def spectrum_power_for_response(ax, lfp_data, event_times_by_batch, fs=300,
             stop_index = int(start_index+samples_per_event)
             batch_responses.append(lfp_data[start_index:stop_index])
         lfp_response_mat.append(batch_responses)
+
     if debug:
         print('ax')
         print(ax)
         print('lfp response mat')
         print(lfp_response_mat)
+
     power_over_time = {'Delta': [],
                        'Theta': [],
                        'Alpha': [],
@@ -546,6 +617,67 @@ def PCA_2D_for_batch_responses_dual_taste(ax1, pca_data_array, neuron_num, taste
     ax1.set_ylabel('PC2 - V.E = {0:02f}%'.format(pca.fracs[1] * 100))
     ax1.legend(loc='upper right')
     return ax1, distances, distances_2d
+
+def PCA_2D_for_population_batch_responses(ax1, pca_data_array, neuron_num_list, taste='sacc', title='', normalize=False):
+    """
+    creating and showing a dynamic PCA over time of population responses to different tastes.
+    """
+    print('creating and showing dynamic PCA over time of population responses to different tastes')
+    batch_lengths = []
+    taste_to_num = {'sacc': 1, 'water': 0}
+
+    for batch_num, batch in enumerate(pca_data_array[taste_to_num[taste]]):
+        batch_lengths.append(len(batch))
+        if batch_num == 0:
+            batch_mat = np.array(batch)
+        else:
+            #             print(batch_mat.shape)
+            #             print(np.array(batch).shape)
+            batch_mat = np.concatenate((batch_mat, np.array(batch)), axis=0)
+
+    batch_mat = batch_mat[:, neuron_num_list, 30:70]
+    averaged_neural_response_batch_mat = []
+    total_batch_len = 0
+    for current_batch_len in batch_lengths:
+        batch_responses = []
+        for neuron_num in neuron_num_list:
+            average_neuron_FR_for_batch = batch_mat[total_batch_len : total_batch_len + current_batch_len, neuron_num, :].mean(axis=0)
+            batch_responses.append(average_neuron_FR_for_batch)
+        averaged_neural_response_batch_mat.append(batch_responses)
+
+    """ averaged_neural_response_batch_mat dimensions: 0 - batch, 1 - neuron average response, 2 - time """
+    averaged_neural_response_batch_mat = np.swapaxes(averaged_neural_response_batch_mat,0,1)
+    """ averaged_neural_response_batch_mat dimensions: 0 - neuron average response, 1 - batch, 2 - time """
+    d1,d2,d3 = averaged_neural_response_batch_mat.shape
+    flat_averaged_neural_response_batch_mat = np.transpose(np.reshape(averaged_neural_response_batch_mat,(d1,d2+d3)))
+    """ averaged_neural_response_batch_mat dimensions: 1 - neurons, 0 - batch_times so every 40 bins is
+    1 average batch response ex: dim 0 is neurons, and dim 1 is built like this: 0-40 is bins of batch 1, 41-80 is bins of batch 2 etc"""
+    #     pca = PCA(pca_3D_data_array[:,:,i], standardize=False)
+
+    pca = PCA(flat_averaged_neural_response_batch_mat, standardize=normalize)
+    reshaped_pca = np.reshape(np.transpose(pca.Y),(d1,d2,d3))
+    # reshaped_pca = np.swapaxes(reshaped_pca, 0, 1)
+    # reshaped_pca = np.swapaxes(reshaped_pca, 1, 2)
+
+    PCA_batchs_x = []
+    PCA_batchs_y = []
+
+    for i in range(d2):
+        PCA_batchs_x.append(reshaped_pca[0,i,:])
+        PCA_batchs_y.append(reshaped_pca[1,i,:])
+
+
+    for i in range(len(PCA_batchs_x)):
+        ax1.plot(PCA_batchs_x[i], PCA_batchs_y[i],label='population response for batch {}'.format(i+1))
+
+    ax1.set_title(title + '\nTotal Var Exp = {}%'.format(sum(pca.fracs[:2]) * 100))
+    # ax1.set_xlim(-2,2)
+    # ax1.set_ylim(-1, 1)
+    # ax1.set_zlim(-1, 1)
+    ax1.set_xlabel('PC1 - V.E = {0:02f}%'.format(pca.fracs[0] * 100))
+    ax1.set_ylabel('PC2 - V.E = {0:02f}%'.format(pca.fracs[1] * 100))
+    ax1.legend(loc='upper right')
+    return ax1
 
 def calc_batch_times(dic,taste):
     diffs = dic['event_times'][taste][1:] - dic['event_times'][taste][:-1]

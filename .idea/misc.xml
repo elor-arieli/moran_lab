@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="IpnbSettings">
+    <option name="URL" value="http://127.0.0.1:8890/?token=05ca90ee0841561f2632223c9ef6de977d2ab74b8bd03bbe" />
+  </component>
   <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.5.2 (D:\Users\AnanM4\Miniconda3\envs\klusta\python.exe)" project-jdk-type="Python SDK" />
 </project>
