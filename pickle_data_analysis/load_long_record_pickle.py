@@ -49,6 +49,178 @@ class pickle_loader(object):
             'water batch times': calc_batch_times(self.data, 'water'),
         }
 
+    def calc_CV_over_time_for_all_neurons(self, average_ever_x_minutes=5, pre_title=None, single_fig=False):
+        all_CV_times = []
+        fig = plt.figure()
+        fig.clf()
+        ax = fig.add_subplot(111)
+
+        if single_fig:
+            for neural_spike_times in self.data['neurons']:
+                CV_over_time = []
+                total_time = neural_spike_times[2][-1] - neural_spike_times[2][0]
+                num_of_pieces = int(total_time / (average_ever_x_minutes * 60))
+                pieces = np.linspace(neural_spike_times[2][0], neural_spike_times[2][-1], num_of_pieces)
+
+                for i in range(len(pieces) - 1):
+                    left_border = np.searchsorted(neural_spike_times[2], pieces[i])
+                    right_border = np.searchsorted(neural_spike_times[2], pieces[i + 1])
+                    spikes = neural_spike_times[2][left_border:right_border]
+                    CV_over_time.append(calcCV(spikes))
+                ax.plot(CV_over_time,label='{}-{}'.format(neural_spike_times[0],neural_spike_times[1]))
+                all_CV_times.append(CV_over_time)
+            ax.legend()
+            if pre_title is not None:
+                fig.savefig('{} CV over time for all neurons.jpeg'.format(pre_title), format='jpeg')
+                fig.savefig('{} CV over time for all neurons.svg'.format(pre_title), format='svg')
+            else:
+                fig.savefig('CV over time for all neurons.jpeg', format='jpeg')
+                fig.savefig('CV over time for all neurons.svg', format='svg')
+
+        else:
+            for neural_spike_times in self.data['neurons']:
+                fig.clf()
+                CV_over_time = []
+                total_time = neural_spike_times[2][-1] - neural_spike_times[2][0]
+                num_of_pieces = int(total_time / (average_ever_x_minutes * 60))
+                pieces = np.linspace(neural_spike_times[2][0], neural_spike_times[2][-1], num_of_pieces)
+
+                for i in range(len(pieces) - 1):
+                    left_border = np.searchsorted(neural_spike_times[2], pieces[i])
+                    right_border = np.searchsorted(neural_spike_times[2], pieces[i + 1])
+                    spikes = neural_spike_times[2][left_border:right_border]
+                    CV_over_time.append(calcCV(spikes))
+
+                ax.plot(CV_over_time, label='{}-{}'.format(neural_spike_times[0], neural_spike_times[1]))
+                all_CV_times.append(CV_over_time)
+                ax.legend()
+
+                if pre_title is not None:
+                    fig.savefig('{} CV over time for neuron {}-{}.jpeg'.format(pre_title, neural_spike_times[0], neural_spike_times[1]), format='jpeg')
+                    fig.savefig('{} CV over time for neuron {}-{}.svg'.format(pre_title, neural_spike_times[0], neural_spike_times[1]), format='svg')
+                else:
+                    fig.savefig('CV over time for neuron {}-{}.jpeg'.format(neural_spike_times[0], neural_spike_times[1]), format='jpeg')
+                    fig.savefig('CV over time for neuron {}-{}.svg'.format(neural_spike_times[0], neural_spike_times[1]), format='svg')
+
+        return all_CV_times
+
+    def calc_CV_over_time_for_neuron(self, elec, cluster, average_ever_x_minutes=5,save=False, pre_title=None):
+        CV_over_time = []
+        for neural_spike_times in self.data['neurons']:
+            if neural_spike_times[0] == elec and neural_spike_times[1] == cluster:
+                total_time = neural_spike_times[2][-1] - neural_spike_times[2][0]
+                num_of_pieces = int(total_time/(average_ever_x_minutes*60))
+                pieces = np.linspace(neural_spike_times[2][0],neural_spike_times[2][-1],num_of_pieces)
+                for i in range(len(pieces)-1):
+                    left_border = np.searchsorted(neural_spike_times[2], pieces[i])
+                    right_border = np.searchsorted(neural_spike_times[2], pieces[i+1])
+                    spikes = neural_spike_times[2][left_border:right_border]
+                    CV_over_time.append(calcCV(spikes))
+
+        fig = plt.figure()
+        fig.clf()
+        ax = fig.add_subplot(111)
+        ax.plot(CV_over_time)
+        if save:
+            if pre_title is not None:
+                fig.savefig('{} CV over time for neuron {}-{}.jpeg'.format(pre_title,elec,cluster),format='jpeg')
+                fig.savefig('{} CV over time for neuron {}-{}.svg'.format(pre_title,elec,cluster),format='svg')
+            else:
+                fig.savefig('CV over time for neuron {}-{}.jpeg'.format(elec,cluster),format='jpeg')
+                fig.savefig('CV over time for neuron {}-{}.svg'.format(elec,cluster),format='svg')
+        else:
+            plt.show()
+        return CV_over_time
+
+    def calc_FF_over_time_for_all_neurons(self, average_ever_x_minutes=5, pre_title=None, single_fig=False):
+        all_FF_times = []
+        fig = plt.figure()
+        fig.clf()
+        ax = fig.add_subplot(111)
+
+        if single_fig:
+            for neural_spike_times in self.data['neurons']:
+                FF_over_time = []
+                total_time = neural_spike_times[2][-1] - neural_spike_times[2][0]
+                num_of_pieces = int(total_time / (average_ever_x_minutes * 60))
+                pieces = np.linspace(neural_spike_times[2][0], neural_spike_times[2][-1], num_of_pieces)
+
+                for i in range(len(pieces) - 1):
+                    left_border = np.searchsorted(neural_spike_times[2], pieces[i])
+                    right_border = np.searchsorted(neural_spike_times[2], pieces[i + 1])
+                    spikes = neural_spike_times[2][left_border:right_border]
+                    FF_over_time.append(calcFF(spikes,average_ever_x_minutes*12))
+                ax.plot(FF_over_time, label='{}-{}'.format(neural_spike_times[0], neural_spike_times[1]))
+                all_FF_times.append(FF_over_time)
+            ax.legend()
+            if pre_title is not None:
+                fig.savefig('{} FF over time for all neurons.jpeg'.format(pre_title), format='jpeg')
+                fig.savefig('{} FF over time for all neurons.svg'.format(pre_title), format='svg')
+            else:
+                fig.savefig('FF over time for all neurons.jpeg', format='jpeg')
+                fig.savefig('FF over time for all neurons.svg', format='svg')
+
+        else:
+            for neural_spike_times in self.data['neurons']:
+                fig.clf()
+                FF_over_time = []
+                total_time = neural_spike_times[2][-1] - neural_spike_times[2][0]
+                num_of_pieces = int(total_time / (average_ever_x_minutes * 60))
+                pieces = np.linspace(neural_spike_times[2][0], neural_spike_times[2][-1], num_of_pieces)
+
+                for i in range(len(pieces) - 1):
+                    left_border = np.searchsorted(neural_spike_times[2], pieces[i])
+                    right_border = np.searchsorted(neural_spike_times[2], pieces[i + 1])
+                    spikes = neural_spike_times[2][left_border:right_border]
+                    FF_over_time.append(calcFF(spikes,average_ever_x_minutes*12))
+
+                ax.plot(FF_over_time, label='{}-{}'.format(neural_spike_times[0], neural_spike_times[1]))
+                all_FF_times.append(FF_over_time)
+                ax.legend()
+
+                if pre_title is not None:
+                    fig.savefig('{} FF over time for neuron {}-{}.jpeg'.format(pre_title, neural_spike_times[0],
+                                                                               neural_spike_times[1]), format='jpeg')
+                    fig.savefig('{} FF over time for neuron {}-{}.svg'.format(pre_title, neural_spike_times[0],
+                                                                              neural_spike_times[1]), format='svg')
+                else:
+                    fig.savefig(
+                        'FF over time for neuron {}-{}.jpeg'.format(neural_spike_times[0], neural_spike_times[1]),
+                        format='jpeg')
+                    fig.savefig(
+                        'FF over time for neuron {}-{}.svg'.format(neural_spike_times[0], neural_spike_times[1]),
+                        format='svg')
+
+        return all_FF_times
+
+    def calc_FF_over_time_for_neuron(self, elec, cluster, average_ever_x_minutes=5, save=False, pre_title=None):
+        FF_over_time = []
+        for neural_spike_times in self.data['neurons']:
+            if neural_spike_times[0] == elec and neural_spike_times[1] == cluster:
+                total_time = neural_spike_times[2][-1] - neural_spike_times[2][0]
+                num_of_pieces = int(total_time / (average_ever_x_minutes * 60))
+                pieces = np.linspace(neural_spike_times[2][0], neural_spike_times[2][-1], num_of_pieces)
+                for i in range(len(pieces) - 1):
+                    left_border = np.searchsorted(neural_spike_times[2], pieces[i])
+                    right_border = np.searchsorted(neural_spike_times[2], pieces[i + 1])
+                    spikes = neural_spike_times[2][left_border:right_border]
+                    FF_over_time.append(calcFF(spikes,average_ever_x_minutes*12))
+
+        fig = plt.figure()
+        fig.clf()
+        ax = fig.add_subplot(111)
+        ax.plot(FF_over_time)
+        if save:
+            if pre_title is not None:
+                fig.savefig('{} FF over time for neuron {}-{}.jpeg'.format(pre_title, elec, cluster), format='jpeg')
+                fig.savefig('{} FF over time for neuron {}-{}.svg'.format(pre_title, elec, cluster), format='svg')
+            else:
+                fig.savefig('FF over time for neuron {}-{}.jpeg'.format(elec, cluster), format='jpeg')
+                fig.savefig('FF over time for neuron {}-{}.svg'.format(elec, cluster), format='svg')
+        else:
+            plt.show()
+        return FF_over_time
+
     def plot_lfp_power_over_time(self,average_every_x_minutes=5, bands_to_plot=['Delta','Theta','Alpha','Beta','Gamma','Fast Gamma'],
                                  smooth=True,save_fig=False):
         if self.lfp_data is False:
@@ -244,7 +416,48 @@ class pickle_loader(object):
                                                                     style=style, save_fig=True)
         return
 
+def calcCV(spike_train):
+    """
+    :param spike_train: spike times
+    :return: the coefficient of variation of the spike train
+    """
+    if isinstance(spike_train[0],list):
+        means = []
+        stds = []
+        for train in spike_train:
+            nptrain = np.array(train)
+            spike_intervals = (nptrain[1:] - nptrain[:-1])*1000
+            if len(spike_intervals) > 1:
+                means.append(np.mean(spike_intervals))
+                stds.append(np.std(spike_intervals))
+        mean = np.mean([i for i in means if np.isnan(i)==False])
+        std = np.mean([i for i in stds if np.isnan(i)==False])
+    else:
+        spike_train = np.array(spike_train)
+        spike_intervals = (spike_train[1:] - spike_train[:-1])*1000
+        mean = np.mean(spike_intervals)
+        std = np.std(spike_intervals)
+    CV = mean/std
+    return CV
 
+def calcFF(spike_train,pieces):
+    """
+    :param spike_train: spike times
+    :return: the Fano Factor of the spike train
+    """
+    spikes_in_pieces = []
+    if isinstance(spike_train[0],list):
+        for train in spike_train:
+            if len(train) > 1:
+                spikes_in_pieces.append(np.count_nonzero(train)/(train[-1]-train[0]))
+    else:
+        borders = np.linspace(spike_train[0],spike_train[-1],pieces)
+        for i in range(1,len(borders)):
+            spikes_in_pieces.append(len([spike for spike in spike_train if borders[i-1] < spike < borders[i]]))
+    mean = np.mean(spikes_in_pieces)
+    var = np.var(spikes_in_pieces)
+    FF = mean/var
+    return FF
 
 
 def spectrum_power_for_response(ax, lfp_data, event_times_by_batch, fs=300,
@@ -714,7 +927,9 @@ def create_psth_matrix_for_long_rec(all_neurons_spike_times, event_dic, taste_li
                 # taste_event_amount[taste] += 1
                 for neural_spike_times in all_neurons_spike_times:
                     if neural_spike_times[0] not in bad_elec_list:
-                        spikes = [neural_spike_times[2][i] - event for i in range(len(neural_spike_times[2])) if -1 < neural_spike_times[2][i] - event < 4]
+                        left_border = np.searchsorted(neural_spike_times[2] - event, -1)
+                        right_border = np.searchsorted(neural_spike_times[2] - event, 4)
+                        spikes = neural_spike_times[2][left_border:right_border] - event
                         hist1, bin_edges = np.histogram(spikes, int(bin_amount), (-1, 4))
                         spikes_in_bin = hist1 / 0.05
                         all_neural_responses_for_event.append(spikes_in_bin)
