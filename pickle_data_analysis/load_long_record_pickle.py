@@ -7,10 +7,10 @@ from mpl_toolkits.mplot3d import proj3d
 from matplotlib.mlab import PCA
 from scipy.spatial import distance
 import os
-# from band_pass_filters import butter_bandpass_filter
+from moran_lab.band_pass_filters import butter_bandpass
 from scipy.io import loadmat
 from scipy.stats import ttest_ind as Ttest
-from scipy.signal import butter, lfilter
+from scipy.signal import butter, lfilter, filtfilt
 from math import factorial
 from moran_lab.plotter import adjust_ylim
 
@@ -24,7 +24,7 @@ class pickle_loader(object):
     """
     session start time needs to be in (hours,minute) format from the start of recording
     """
-    def __init__(self,filename,session_start_time,lfp_data_file=False,lfp_fs=300):
+    def __init__(self, filename, session_start_time, lfp_data_file=False, lfp_fs=300):
         with (open(filename, "rb")) as openfile:
             while True:
                 try:
@@ -1107,21 +1107,38 @@ def get_neuron_num_from_dic(dic,elec,cluster):
     print('no such neuron found, returning None')
     return None
 
-def undersample_file(in_file,out_file,current_FS=30000, new_FS=300):
+def undersample_file(in_file,out_file,current_FS=30000, new_FS=300, filter=True, low_pass=500):
     open_read_file = open(in_file + '.dat', 'r+b')
     open_write_file = open(out_file + '.dat', 'wb')
 
     # get first bytes to initialize while loop
-    by = open_read_file.read(2)
     open_read_file.seek(0)
-
+    by = open_read_file.read(2)
+    byte_arr = []
     # iterate over 2 bytes each time and write them minus the average to new file.
     i = 0
     write_every_x = int(current_FS/new_FS)
-    while len(by) > 1:
-        i+=1
-        by = open_read_file.read(2)
-        if i % write_every_x == 0:
-            open_write_file.write(by)
+    if filter:
+        while len(by) > 2 and i<=30000:
+            if i == 30000:
+                i = 0
+                ints = [int.from_bytes(by1, 'little', signed=True) for by1 in byte_arr]
+                b, a = butter_bandpass(0,low_pass,current_FS,5)
+                filtered_ints = filtfilt(b,a,ints)
+                bytes_to_write = [int.to_bytes(num, 2, 'little', signed=True) for num in filtered_ints[::write_every_x]]
+                for write_byte in bytes_to_write:
+                    open_write_file.write(write_byte)
+                byte_arr = []
+
+            else:
+                i+=1
+                byte_arr.append(by)
+            by = open_read_file.read(2)
+    else:
+        while len(by) > 2:
+            i+=1
+            by = open_read_file.read(2)
+            if i % write_every_x == 0:
+                open_write_file.write(by)
     open_read_file.close()
     open_write_file.close()
