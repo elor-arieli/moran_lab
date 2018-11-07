@@ -29,6 +29,27 @@ class model_sorter:
         self.cluster_groups = self.model.cluster_groups
         self.good_clusters = self.get_good_clusters()
         self.spike_times_by_cluster = self.sort_by_cluster()
+        self.waveform_mat_per_cluster = self.get_waveform()
+
+    def get_waveform(self):
+        waveform_per_cluster_dic = {}
+        with open(self.file[:-5] + ".dat", "rb") as dat_file:
+            for cluster in self.good_clusters:
+                dat_file.seek(0)
+                lst_uint = []
+                spike_times = self.spike_times_by_cluster[cluster][::100]
+                spike_times_in_indexs = (np.array(spike_times) * 60000).astype(np.int64)
+                for i in spike_times_in_indexs:
+                    dat_file.seek(i - 40)
+                    bys = dat_file.read(80)
+                    ints = np.frombuffer(bys, dtype=np.uint16)
+                    #         ints = int.from_bytes(bys, byteorder='little')
+                    new_ints = (ints - 32768) * 0.195
+                    new_ints -= new_ints.mean()
+                    lst_uint.append(new_ints)
+                waveform_per_cluster_dic[cluster] = np.array(lst_uint)
+        return waveform_per_cluster_dic
+
 
     def get_good_clusters(self):
         """
@@ -124,9 +145,12 @@ class All_electrodes():
     def save_as_pickle_dic(self,filename,only_taste_responsive=False):
         save_file = self.mother_directory + filename + '.pkl'
         full_dic = {}
-        full_dic['format'] = 'event times are either false if no data, or a dictionary with tastes as keys and taste times array as the value\n' \
+        full_dic['format'] = 'event times are either false if no data, or a dictionary with tastes as keys and taste ' \
+                             'times array as the value\n' \
                              'laser times are either false if no date, or a list with laser times\n' \
-                             'neurons is an array of arrays where each array[0] is the electrode number array[1] is the cluster and array[2] is an array of spike times'
+                             'neurons is an array of arrays where each array[0] is the electrode number array[1] ' \
+                             'is the cluster, array[2] is an array of spike times and array[3] is the waveform mat with 60' \
+                             'samples centered around each spike time'
         full_dic['neurons'] = []
         full_dic['event_times'] = self.event_times
         full_dic['laser_times'] = self.laser_times
@@ -141,6 +165,7 @@ class All_electrodes():
                 lst.append(cluster)
                 spike_times = np.array(self.electrodes[elec].spike_times_by_cluster[cluster])
                 lst.append(spike_times)
+                lst.append(self.electrodes[elec].waveform_mat_per_cluster[cluster])
                 full_dic['neurons'].append(lst)
         with open(save_file, 'wb') as f:
             pickle.dump(full_dic, f, pickle.HIGHEST_PROTOCOL)

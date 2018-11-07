@@ -25,6 +25,58 @@ def get_amp_names(file):
     dins = [a['board_dig_in_channels'][i]['native_channel_name'] for i in range(len(a['board_dig_in_channels']))]
     return sorted(amps),sorted(dins)
 
+
+def merge_directories(first_dir,second_dir,out_dir,amp_letter="A"):
+    file_list = ["amp-"+amp_letter+"-{0:03}.dat".format(i) for i in range(32)]
+    file_list.append("water.dat")
+    file_list.append("sugar.dat")
+    file_list.append("nacl.dat")
+    file_list.append("CA.dat")
+    file_list.append("board-DIN-00.dat")
+    file_list.append("board-DIN-01.dat")
+    file_list.append("board-DIN-02.dat")
+    file_list.append("board-DIN-03.dat")
+
+    for file_name in (file_list):
+        if os.path.exists(first_dir + "//" + file_name):
+            print("working on file {}".format(file_name))
+            with open(out_dir + "//" + file_name, "wb") as out_file:
+
+                with open(first_dir + "//" + file_name, "rb") as in_file_first:
+                    i = 0
+                    print("working getting data from first file")
+                    piece = in_file_first.read(4096)
+                    in_file_first.seek(0)
+
+                    while len(piece) > 4095:
+                        i+=1
+                        piece = in_file_first.read(4096)
+
+                        if piece == "":
+                            break # end of file
+
+                        out_file.write(piece)
+                        if i % 50000 == 0:
+                            print("wrote {} Gbs".format(i/262144))
+
+                with open(second_dir + "//" + file_name, "rb") as in_file_second:
+                    print("working getting data from second file")
+                    i = 0
+                    piece = in_file_second.read(4096)
+                    in_file_second.seek(0)
+
+                    while len(piece) > 4095:
+                        i+=1
+                        piece = in_file_second.read(4096)
+
+                        if piece == "":
+                            break # end of file
+
+                        out_file.write(piece)
+                        if i % 50000 == 0:
+                            print("wrote {} Gbs".format(i/262144))
+
+
 def turn_rhd_to_dat_full_directory(directory=None):
 
     # create new directory to write to
