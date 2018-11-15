@@ -1119,13 +1119,13 @@ def undersample_file(in_file,out_file,current_FS=30000, new_FS=300, filter=True,
     i = 0
     write_every_x = int(current_FS/new_FS)
     if filter:
-        while len(by) > 2 and i<=30000:
-            if i == 30000:
+        while len(by) > 1 and i<=300000:
+            if i == 300000:
                 i = 0
                 ints = [int.from_bytes(by1, 'little', signed=True) for by1 in byte_arr]
                 b, a = butter_bandpass(0,low_pass,current_FS,5)
                 filtered_ints = filtfilt(b,a,ints)
-                bytes_to_write = [int.to_bytes(num, 2, 'little', signed=True) for num in filtered_ints[::write_every_x]]
+                bytes_to_write = [int.to_bytes(int(num), 2, 'little', signed=True) for num in filtered_ints[::write_every_x]]
                 for write_byte in bytes_to_write:
                     open_write_file.write(write_byte)
                 byte_arr = []
@@ -1135,7 +1135,7 @@ def undersample_file(in_file,out_file,current_FS=30000, new_FS=300, filter=True,
                 byte_arr.append(by)
             by = open_read_file.read(2)
     else:
-        while len(by) > 2:
+        while len(by) > 1:
             i+=1
             by = open_read_file.read(2)
             if i % write_every_x == 0:

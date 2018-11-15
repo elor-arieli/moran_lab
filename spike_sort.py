@@ -4,7 +4,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 from klusta.kwik.model import KwikModel
 import os
-from band_pass_filters import butter_bandpass_filter
+from moran_lab.band_pass_filters import butter_bandpass_filter
 from moran_lab.plotter import plot_psth,raster,get_color_for_taste,plot_psth_with_rasters,plot_psth_with_rasters_with_without_laser,plot_psth_with_raster_divide_by_trial,plot_clustergram
 from scipy.io import loadmat
 import pickle
@@ -40,13 +40,14 @@ class model_sorter:
                 spike_times = self.spike_times_by_cluster[cluster][::100]
                 spike_times_in_indexs = (np.array(spike_times) * 60000).astype(np.int64)
                 for i in spike_times_in_indexs:
-                    dat_file.seek(i - 40)
-                    bys = dat_file.read(80)
-                    ints = np.frombuffer(bys, dtype=np.uint16)
-                    #         ints = int.from_bytes(bys, byteorder='little')
-                    new_ints = (ints - 32768) * 0.195
-                    new_ints -= new_ints.mean()
-                    lst_uint.append(new_ints)
+                    if i > 40:
+                        dat_file.seek(i - 40)
+                        bys = dat_file.read(80)
+                        ints = np.frombuffer(bys, dtype=np.uint16)
+                        #         ints = int.from_bytes(bys, byteorder='little')
+                        new_ints = (ints - 32768) * 0.195
+                        new_ints -= new_ints.mean()
+                        lst_uint.append(new_ints)
                 waveform_per_cluster_dic[cluster] = np.array(lst_uint)
         return waveform_per_cluster_dic
 

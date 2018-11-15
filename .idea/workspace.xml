@@ -4,6 +4,7 @@
     <list default="true" id="8932ca1c-b891-493b-a39a-bd3f31b54520" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pickle_data_analysis/load_long_record_pickle.py" afterPath="$PROJECT_DIR$/pickle_data_analysis/load_long_record_pickle.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spike_sort.py" afterPath="$PROJECT_DIR$/spike_sort.py" />
     </list>
     <ignored path="moran_lab.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,8 +28,8 @@
       <file leaf-file-name="spike_sort.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/spike_sort.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="275" column="37" selection-start-line="275" selection-start-column="37" selection-end-line="275" selection-end-column="37" />
+            <state relative-caret-position="272">
+              <caret line="43" column="45" selection-start-line="43" selection-start-column="45" selection-end-line="43" selection-end-column="45" />
               <folding>
                 <element signature="e#21#39#0" expanded="true" />
               </folding>
@@ -51,7 +52,7 @@
       <file leaf-file-name="band_pass_filters.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/band_pass_filters.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="411">
+            <state relative-caret-position="1343">
               <caret line="81" column="24" selection-start-line="81" selection-start-column="24" selection-end-line="81" selection-end-column="24" />
               <folding />
             </state>
@@ -61,7 +62,7 @@
       <file leaf-file-name="plotter.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/plotter.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="184">
+            <state relative-caret-position="3111">
               <caret line="189" column="35" selection-start-line="189" selection-start-column="33" selection-end-line="189" selection-end-column="35" />
               <folding>
                 <element signature="e#21#65#0" expanded="true" />
@@ -83,16 +84,15 @@
       <file leaf-file-name="load_long_record_pickle.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pickle_data_analysis/load_long_record_pickle.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="382">
-              <caret line="1127" column="75" selection-start-line="1127" selection-start-column="75" selection-end-line="1127" selection-end-column="75" />
+            <state relative-caret-position="204">
+              <caret line="12" column="50" selection-start-line="12" selection-start-column="50" selection-end-line="12" selection-end-column="50" />
               <folding>
-                <element signature="e#0#13#0" expanded="true" />
                 <element signature="e#45456#48217#0" expanded="false" />
                 <element signature="e#48283#51246#0" expanded="false" />
-                <element signature="e#51303#51433#0" expanded="false" />
                 <element signature="e#51503#51600#0" expanded="false" />
                 <element signature="e#51653#51820#0" expanded="false" />
                 <element signature="e#51873#52079#0" expanded="false" />
+                <element signature="e#52181#53455#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -124,7 +124,7 @@
       <file leaf-file-name="multi_klusta.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/multi_klusta.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="167">
+            <state relative-caret-position="2431">
               <caret line="149" column="12" selection-start-line="149" selection-start-column="12" selection-end-line="153" selection-end-column="99" />
               <folding>
                 <element signature="e#21#30#0" expanded="true" />
@@ -161,9 +161,9 @@
         <option value="$PROJECT_DIR$/pickle_data_analysis/tester.py" />
         <option value="$PROJECT_DIR$/algorithm testing.ipynb" />
         <option value="$PROJECT_DIR$/algorithm tester.ipynb" />
-        <option value="$PROJECT_DIR$/spike_sort.py" />
         <option value="$PROJECT_DIR$/multi_file_handler/multi_lfp_loader.py" />
         <option value="$PROJECT_DIR$/multi_klusta.py" />
+        <option value="$PROJECT_DIR$/spike_sort.py" />
         <option value="$PROJECT_DIR$/pickle_data_analysis/load_long_record_pickle.py" />
       </list>
     </option>
@@ -205,7 +205,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -252,14 +251,29 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="moran_lab" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="moran_lab" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="extra_files" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../klustakwik2" />
-    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="WebServerToolWindowFactoryState" value="false" />
   </component>
@@ -520,7 +534,14 @@
       <option name="project" value="LOCAL" />
       <updated>1541580110962</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="7/11/18 - added filtering to undersampling function">
+      <created>1541601655789</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1541601655789</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TodoView">
@@ -539,7 +560,6 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.10190074" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.36037934" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32827735" sideWeight="0.49789253" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32827735" sideWeight="0.49789253" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32394367" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -551,6 +571,7 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32827735" sideWeight="0.63962066" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32827735" sideWeight="0.49789253" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -603,7 +624,8 @@
     <MESSAGE value="09/10/18 - added plot and save BL FR for all neurons automatically" />
     <MESSAGE value="17/10/18 - added CV and FF analysis for single neurons and population" />
     <MESSAGE value="7/11/18 - added directory merging function under multi_klusta&#10;added multi_lfp_loader module&#10;added waveform reading to spike_sort module" />
-    <option name="LAST_COMMIT_MESSAGE" value="7/11/18 - added directory merging function under multi_klusta&#10;added multi_lfp_loader module&#10;added waveform reading to spike_sort module" />
+    <MESSAGE value="7/11/18 - added filtering to undersampling function" />
+    <option name="LAST_COMMIT_MESSAGE" value="7/11/18 - added filtering to undersampling function" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -936,7 +958,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -965,19 +986,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/spike_sort.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="275" column="37" selection-start-line="275" selection-start-column="37" selection-end-line="275" selection-end-column="37" />
-          <folding>
-            <element signature="e#21#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/plotter.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
+        <state relative-caret-position="3111">
           <caret line="189" column="35" selection-start-line="189" selection-start-column="33" selection-end-line="189" selection-end-column="35" />
           <folding>
             <element signature="e#21#65#0" expanded="true" />
@@ -987,7 +998,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/multi_klusta.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="167">
+        <state relative-caret-position="2431">
           <caret line="149" column="12" selection-start-line="149" selection-start-column="12" selection-end-line="153" selection-end-column="99" />
           <folding>
             <element signature="e#21#30#0" expanded="true" />
@@ -1005,24 +1016,33 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/band_pass_filters.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="411">
+        <state relative-caret-position="1343">
           <caret line="81" column="24" selection-start-line="81" selection-start-column="24" selection-end-line="81" selection-end-column="24" />
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/spike_sort.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="43" column="45" selection-start-line="43" selection-start-column="45" selection-end-line="43" selection-end-column="45" />
+          <folding>
+            <element signature="e#21#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/pickle_data_analysis/load_long_record_pickle.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="382">
-          <caret line="1127" column="75" selection-start-line="1127" selection-start-column="75" selection-end-line="1127" selection-end-column="75" />
+        <state relative-caret-position="204">
+          <caret line="12" column="50" selection-start-line="12" selection-start-column="50" selection-end-line="12" selection-end-column="50" />
           <folding>
-            <element signature="e#0#13#0" expanded="true" />
             <element signature="e#45456#48217#0" expanded="false" />
             <element signature="e#48283#51246#0" expanded="false" />
-            <element signature="e#51303#51433#0" expanded="false" />
             <element signature="e#51503#51600#0" expanded="false" />
             <element signature="e#51653#51820#0" expanded="false" />
             <element signature="e#51873#52079#0" expanded="false" />
+            <element signature="e#52181#53455#0" expanded="false" />
           </folding>
         </state>
       </provider>
