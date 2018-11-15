@@ -2,9 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8932ca1c-b891-493b-a39a-bd3f31b54520" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_files/Amp-A 3-10 clusters big chunk.rar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_files/amp-A 3-10 clusters.rar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_files/amp_A_data.rar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_files/amp_B_data.rar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_files/1chan28.prb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_files/moran_lab_env_15-11-18.yml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pickle_data_analysis/load_long_record_pickle.py" afterPath="$PROJECT_DIR$/pickle_data_analysis/load_long_record_pickle.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spike_sort.py" afterPath="$PROJECT_DIR$/spike_sort.py" />
     </list>
     <ignored path="moran_lab.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -541,7 +545,14 @@
       <option name="project" value="LOCAL" />
       <updated>1541601655789</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="15/11/18 - added extra files folder including env creator&#10;fixed an import error in spike_sort">
+      <created>1542286520589</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1542286520589</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TodoView">
@@ -555,9 +566,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="1" width="1932" height="1045" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.10190074" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.10190074" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.36037934" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32827735" sideWeight="0.49789253" order="10" side_tool="false" content_ui="tabs" />
@@ -625,7 +636,8 @@
     <MESSAGE value="17/10/18 - added CV and FF analysis for single neurons and population" />
     <MESSAGE value="7/11/18 - added directory merging function under multi_klusta&#10;added multi_lfp_loader module&#10;added waveform reading to spike_sort module" />
     <MESSAGE value="7/11/18 - added filtering to undersampling function" />
-    <option name="LAST_COMMIT_MESSAGE" value="7/11/18 - added filtering to undersampling function" />
+    <MESSAGE value="15/11/18 - added extra files folder including env creator&#10;fixed an import error in spike_sort" />
+    <option name="LAST_COMMIT_MESSAGE" value="15/11/18 - added extra files folder including env creator&#10;fixed an import error in spike_sort" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -1,0 +1,130 @@
+name: klusta
+channels: !!python/tuple
+- defaults
+dependencies:
+- blas=1.0=mkl
+- bzip2=1.0.6=vc14_3
+- colorama=0.3.7=py35_0
+- cycler=0.10.0=py35_0
+- cython=0.25.2=py35_0
+- decorator=4.0.10=py35_1
+- freetype=2.5.5=vc14_1
+- h5py=2.6.0=np111py35_2
+- hdf5=1.8.15.1=vc14_4
+- ipython=5.1.0=py35_0
+- ipython_genutils=0.1.0=py35_0
+- jpeg=8d=vc14_2
+- libpng=1.6.22=vc14_0
+- libtiff=4.0.6=vc14_2
+- matplotlib=1.5.1=np111py35_0
+- menpo::opencv3=3.1.0=py35_0
+- mkl=2017.0.1=0
+- networkx=1.11=py35_0
+- numpy=1.11.3=py35_0
+- openssl=1.0.2j=vc14_0
+- pandas=0.20.1=np111py35_0
+- path.py=9.0.1=py35_0
+- patsy=0.4.1=py35_0
+- pickleshare=0.7.4=py35_0
+- pillow=3.4.2=py35_0
+- pip=9.0.1=py35_1
+- prompt_toolkit=1.0.9=py35_0
+- pygments=2.1.3=py35_0
+- pyparsing=2.1.4=py35_0
+- pyqt=4.11.4=py35_7
+- python=3.5.2=0
+- python-dateutil=2.6.0=py35_0
+- pytz=2016.10=py35_0
+- qt=4.8.7=vc14_9
+- scikit-image=0.12.3=np111py35_1
+- scikit-learn=0.18.1=np111py35_1
+- scipy=0.18.1=np111py35_1
+- setuptools=27.2.0=py35_1
+- simplegeneric=0.8.1=py35_1
+- sip=4.18=py35_0
+- six=1.10.0=py35_0
+- statsmodels=0.8.0=np111py35_0
+- tk=8.5.18=vc14_0
+- traitlets=4.3.1=py35_0
+- vc=14=0
+- vs2015_runtime=14.0.25123=0
+- wcwidth=0.1.7=py35_0
+- wheel=0.29.0=py35_0
+- win_unicode_console=0.5=py35_0
+- zlib=1.2.8=vc14_3
+- pip:
+  - appdirs==1.4.3
+  - bayesian-changepoint-detection==0.2.dev1
+  - beautifulsoup4==4.6.0
+  - bleach==2.0.0
+  - click==6.6
+  - colorlover==0.2.1
+  - cookies==2.2.1
+  - cufflinks==0.11.0
+  - dask==0.13.0
+  - dictset==0.3.1.2
+  - entrypoints==0.2.2
+  - ffmpy==0.2.2
+  - html5lib==0.999999999
+  - ipykernel==4.6.1
+  - ipython-genutils==0.1.0
+  - ipywidgets==6.0.0
+  - jinja2==2.9.6
+  - joblib==0.10.3
+  - jsonschema==2.6.0
+  - jupyter==1.0.0
+  - jupyter-client==5.0.1
+  - jupyter-console==5.1.0
+  - jupyter-core==4.3.0
+  - klusta==3.0.15
+  - klustakwik2==0.2.6
+  - lxml==3.7.3
+  - markupsafe==1.0
+  - mistune==0.7.4
+  - mpmath==1.0.0
+  - nbconvert==5.1.1
+  - nbformat==4.3.0
+  - nltk==3.2.4
+  - notebook==5.0.0
+  - olefile==0.44
+  - packaging==16.8
+  - pandas-datareader==0.4.0
+  - pandocfilters==1.4.1
+  - phy==1.0.9
+  - phycontrib==1.0.15
+  - plotly==2.0.10
+  - prompt-toolkit==1.0.9
+  - protobuf==3.3.0
+  - py==1.4.32
+  - pyopengl==3.1.0
+  - pyqt5==5.11.3
+  - pyqt5-sip==4.19.13
+  - pyserial==3.3
+  - pystaggrelite3==0.1.3
+  - pytest==3.0.5
+  - pyvttbl==0.5.2.2
+  - pyyaml==3.13
+  - pyzmq==16.0.2
+  - qtconsole==4.3.0
+  - redis==2.10.5
+  - requests==2.12.4
+  - requests-file==1.4.2
+  - requests-ftp==0.3.1
+  - responses==0.5.1
+  - seaborn==0.7.1
+  - sqlalchemy==1.1.10
+  - sympy==1.3
+  - tensorflow==1.1.0
+  - tensortools==0.0.1
+  - testpath==0.3
+  - toolz==0.8.2
+  - tornado==4.5.1
+  - tqdm==4.10.0
+  - vispy==0.4.0
+  - webencodings==0.5.1
+  - werkzeug==0.12.1
+  - widgetsnbextension==2.0.0
+  - win-unicode-console==0.5
+  - xlrd==1.1.0
+prefix: D:\Users\AnanM4\Miniconda3\envs\klusta
+
