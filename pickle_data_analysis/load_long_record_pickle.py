@@ -42,6 +42,31 @@ class pickle_loader(object):
                                       'sacc': split_event_times_by_batches(self.data['event_times']['sugar'],
                                                                            self.event_times_in_secs['sacc batch times'])}
 
+    def merge_neurons(self, elec, cluster1, cluster2):
+        neuron1 = get_neuron_num_from_dic(self.data, elec, cluster1)
+        neuron2 = get_neuron_num_from_dic(self.data, elec, cluster2)
+        if neuron1 is not None and neuron2 is not None:
+            self.data["neurons"][neuron1] = np.array(
+                sorted(np.concatenate(self.data["neurons"][neuron1], self.data["neurons"][neuron2])))
+
+            del self.data["neurons"][neuron2]
+        return
+
+    def remove_neurons(self,tuple_list):
+        assert isinstance(tuple_list, list), "must recieve a list of (elec,cluster) tuples"
+        for elec,clus in tuple_list:
+            num = get_neuron_num_from_dic(self.data,elec,clus)
+            if num is not None:
+                del self.data["neurons"][num]
+        return
+
+
+    def resave_as_new_pickle_dic(self, filename):
+        save_file = self.mother_directory + filename + '.pkl'
+        full_dic = self.data
+        with open(save_file, 'wb') as f:
+            pickle.dump(full_dic, f, pickle.HIGHEST_PROTOCOL)
+
     def get_all_event_and_batch_times(self,session_start_time):
         self.event_times_in_secs = {
             'session start': session_start_time[0]*3600+session_start_time[1]*60,
@@ -1104,7 +1129,7 @@ def get_neuron_num_from_dic(dic,elec,cluster):
         counter += 1
         if arr[0] == elec and arr[1] == cluster:
             return counter
-    print('no such neuron found, returning None')
+    print('no neuron found with elec = {}, cluster = {}, returning None'.format(elec,cluster))
     return None
 
 def undersample_file(in_file,out_file,current_FS=30000, new_FS=300, filter=True, low_pass=500):
