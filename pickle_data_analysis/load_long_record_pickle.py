@@ -12,7 +12,8 @@ from scipy.io import loadmat
 from scipy.stats import ttest_ind as Ttest
 from scipy.signal import butter, lfilter, filtfilt
 from math import factorial
-from moran_lab.plotter import adjust_ylim
+from moran_lab.plotter import adjust_ylim,plot_psth_with_rasters_for_axes
+import seaborn as sns
 
 plt.rcParams['axes.facecolor']='white'
 plt.rcParams['savefig.facecolor']='white'
@@ -46,9 +47,11 @@ class pickle_loader(object):
         neuron1 = get_neuron_num_from_dic(self.data, elec, cluster1)
         neuron2 = get_neuron_num_from_dic(self.data, elec, cluster2)
         if neuron1 is not None and neuron2 is not None:
-            self.data["neurons"][neuron1] = np.array(
-                sorted(np.concatenate(self.data["neurons"][neuron1], self.data["neurons"][neuron2])))
-
+            self.data["neurons"][neuron1][2] = np.array(
+                sorted(np.concatenate(self.data["neurons"][neuron1][2], self.data["neurons"][neuron2][2])))
+            if len(self.data["neurons"][neuron1]) > 3:
+                self.data["neurons"][neuron1][3] = np.array(
+                    sorted(np.concatenate(self.data["neurons"][neuron1][3], self.data["neurons"][neuron2][3])))
             del self.data["neurons"][neuron2]
         return
 
@@ -60,6 +63,85 @@ class pickle_loader(object):
                 del self.data["neurons"][num]
         return
 
+    def check_and_display_all_neurons(self, average_every_x_minutes=5, save_figs=False):
+        for neuron in self.data["neurons"]:
+            elec, cluster = neuron[0], neuron[1]
+            self.display_neuron(elec, cluster, average_every_x_minutes=average_every_x_minutes, save_fig=save_figs)
+        return
+
+    def display_neuron(self, elec, cluster, average_every_x_minutes=5, save_fig=False):
+
+        # create plots
+        print("creating plots")
+        fig = plt.figure(num=1, figsize=(20, 12), dpi=1000)
+        fig.clf()
+        ax_upL = fig.add_subplot(231)
+        ax_upM = fig.add_subplot(232)
+        ax_upR = fig.add_subplot(233)
+        ax_downL = fig.add_subplot(234)
+        ax_downM = fig.add_subplot(235)
+        ax_downR = fig.add_subplot(236)
+
+        # get and set params
+        print("getting and setting params")
+        hours_per_point = average_every_x_minutes / 60.0
+        bin_size_in_secs = 60 * average_every_x_minutes
+        session_start = self.event_times_in_secs['session start'] / 3600
+        batch_times_in_hours = self.event_times_in_secs['sacc batch times'] / 3600
+        neuron_num = get_neuron_num_from_dic(self.data, elec, cluster)
+        N0FR = self.data['neurons'][neuron_num][2]
+        if len(self.data['neurons'][neuron_num]) > 3:
+            waveforms = self.data['neurons'][neuron_num][3]
+            amount_of_waveform = waveforms.shape[0]
+            middle_waveform = int(waveforms.shape[0] / 2)
+
+        CV_over_time = self.calc_CV_over_time_for_neuron(elec, cluster, average_ever_x_minutes=average_every_x_minutes)
+        FF_over_time = self.calc_FF_over_time_for_neuron(elec, cluster, average_ever_x_minutes=average_every_x_minutes)
+        smooth_CV = savitzky_golay(CV_over_time, 9, 3)
+        smooth_FF = savitzky_golay(FF_over_time, 9, 3)
+
+        # plot
+        print("plotting PSTH and Raster")
+        ax_upL, ax_downL = plot_psth_with_rasters_for_axes(ax_upL, ax_downL, N0FR, self.data["event_times"],
+                                                           ['sugar', 'water'])
+
+        print("plotting CV anf FF")
+        ax_downM.plot(hours_per_point * np.arange(len(smooth_CV)), smooth_CV, label="CV")
+        ax_downM.vlines(batch_times_in_hours, 0, 1, 'g', linestyles='dashed', linewidth=2, label='batch times')
+
+        ax_downR.plot(hours_per_point * np.arange(len(smooth_FF)), smooth_FF, label="FF")
+        ax_downR.vlines(batch_times_in_hours, 0, 1, 'g', linestyles='dashed', linewidth=2, label='batch times')
+
+        print("plotting BL firing rate and waveforms")
+        if len(self.data['neurons'][neuron_num]) > 3:
+            ax_upR = sns.tsplot(waveforms[:200], ax=ax_upR, color='b', lw=2)
+            ax_upR = sns.tsplot(waveforms[middle_waveform - 100:middle_waveform + 100], ax=ax_upR, color='g', lw=2)
+            ax_upR = sns.tsplot(waveforms[-200:], ax=ax_upR, color='r', lw=2)
+
+        ax_upM = plot_BL_FR_analysis(ax_upM, N0FR, batch_times_in_hours=batch_times_in_hours,
+                                     bin_size_in_secs=bin_size_in_secs, plot_batch_times=True,
+                                     session_start=session_start)
+
+        # set titles and stuff
+        fig.suptitle(
+            "neuron #{}, elec: {}, cluster: {}\n   amount of spikes: {}".format(neuron_num, elec, cluster, len(N0FR)),
+            fontsize=18)
+        ax_upL.set_title("Raster", fontsize=14)
+        ax_upM.set_title("BL Firing Rate", fontsize=14)
+        ax_upR.set_title("Waveforms", fontsize=14)
+        ax_downL.set_title("PSTH", fontsize=14)
+        ax_downM.set_title("CV", fontsize=14)
+        ax_downR.set_title("FF", fontsize=14)
+
+        for ax in (ax_upM, ax_downM, ax_downR):
+            ax.legend()
+        ax_upR.legend(["first 200", "middle 200", "last 200"])
+
+        if save_fig:
+            fig.savefig('full showing of neuron {}-{}.jpeg'.format(elec, cluster), format='jpeg')
+            fig.savefig('full showing of neuron {}-{}.svg'.format(elec, cluster), format='svg')
+        else:
+            plt.show()
 
     def resave_as_new_pickle_dic(self, filename):
         save_file = self.mother_directory + filename + '.pkl'
@@ -129,7 +211,7 @@ class pickle_loader(object):
 
         return all_CV_times
 
-    def calc_CV_over_time_for_neuron(self, elec, cluster, average_ever_x_minutes=5,save=False, pre_title=None):
+    def calc_CV_over_time_for_neuron(self, elec, cluster, average_ever_x_minutes=5,save=False, show=False, pre_title=None):
         CV_over_time = []
         for neural_spike_times in self.data['neurons']:
             if neural_spike_times[0] == elec and neural_spike_times[1] == cluster:
@@ -153,7 +235,7 @@ class pickle_loader(object):
             else:
                 fig.savefig('CV over time for neuron {}-{}.jpeg'.format(elec,cluster),format='jpeg')
                 fig.savefig('CV over time for neuron {}-{}.svg'.format(elec,cluster),format='svg')
-        else:
+        if show:
             plt.show()
         return CV_over_time
 
@@ -218,7 +300,7 @@ class pickle_loader(object):
 
         return all_FF_times
 
-    def calc_FF_over_time_for_neuron(self, elec, cluster, average_ever_x_minutes=5, save=False, pre_title=None):
+    def calc_FF_over_time_for_neuron(self, elec, cluster, average_ever_x_minutes=5, save=False, show=False, pre_title=None):
         FF_over_time = []
         for neural_spike_times in self.data['neurons']:
             if neural_spike_times[0] == elec and neural_spike_times[1] == cluster:
@@ -242,7 +324,7 @@ class pickle_loader(object):
             else:
                 fig.savefig('FF over time for neuron {}-{}.jpeg'.format(elec, cluster), format='jpeg')
                 fig.savefig('FF over time for neuron {}-{}.svg'.format(elec, cluster), format='svg')
-        else:
+        if show:
             plt.show()
         return FF_over_time
 
@@ -446,6 +528,9 @@ def calcCV(spike_train):
     :param spike_train: spike times
     :return: the coefficient of variation of the spike train
     """
+    if len(spike_train) < 1:
+        return 0
+#     print(spike_train)
     if isinstance(spike_train[0],list):
         means = []
         stds = []
@@ -471,6 +556,8 @@ def calcFF(spike_train,pieces):
     :return: the Fano Factor of the spike train
     """
     spikes_in_pieces = []
+    if len(spike_train) < 1:
+        return 0
     if isinstance(spike_train[0],list):
         for train in spike_train:
             if len(train) > 1:

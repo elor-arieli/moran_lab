@@ -372,3 +372,64 @@ def adjust_ylim(ax1,ax2):
     ax1.set_ylim(minylim,maxylim)
     ax2.set_ylim(minylim,maxylim)
     return
+
+def plot_psth_with_rasters_for_axes(raster_ax, psth_ax, spike_train,event_dic,taste_list,bin_width=0.05,start_time=-1,end_time=4,overlap=0,normalize='Hz'):
+    """
+    plots a figure with 2 subplots, the top will be a raster with all tastes given in the list. the bottom will be a PSTH with the tastes given in the list.
+    spike train is a list of spike times.
+    event_dic is a dictionary with keys as tastes and values that are lists of taste times.
+    start and end time are the boundaries in secs of the PSTH and raster.
+    """
+
+    assert isinstance(taste_list,list), 'tastes parameter need to be a list of the taste event file names'
+    assert end_time > start_time, 'start time cannot be bigger or equal to end time'
+    assert normalize == 'Hz' or normalize == 'Average', 'normalize parameter has to be Average or Hz'
+    # assert isinstance(spike_train,(list,np.array,np.ndarray)), 'spike train has to be a list of spike times.'
+    assert isinstance(event_dic,dict), 'event dic needs to be a dictionary'
+
+    ############ Raster ##############
+
+    j = 0
+    for taste in taste_list:
+        print ('collecting spike times for events of taste: {}'.format(taste))
+        event_times_list = []
+        for event in event_dic[taste]:
+            # get the spike times that are in the range of start-stop from each event.
+            left_border = np.searchsorted(spike_train - event, -1)
+            right_border = np.searchsorted(spike_train - event, 4)
+            spikes = spike_train[left_border:right_border] - event
+            event_times_list.append(spikes)
+        for ith, trial in enumerate(event_times_list):
+            raster_ax.vlines(trial, j + ith + .5, j + ith + 1.5, color=get_color_for_taste(taste))
+        j += len(event_times_list)
+    raster_ax.set_ylim(.5, len(event_times_list)*len(taste_list) + .5)
+    raster_ax.set_xlabel('time')
+    raster_ax.set_ylabel('trial')
+    raster_ax.axvline(0, linestyle='--', color='k') # vertical lines
+
+    ############ PSTH ##############
+
+    bin_amount = (end_time-start_time)//bin_width
+    all_spikes = np.array([])
+    for taste in taste_list:
+        for event in event_dic[taste]:
+        # get the spike times that are in the range of start-stop from each event.
+            left_border = np.searchsorted(spike_train - event, -1)
+            right_border = np.searchsorted(spike_train - event, 4)
+            spikes = spike_train[left_border:right_border] - event
+            all_spikes = np.concatenate((all_spikes,spikes))
+        hist1,bin_edges = np.histogram(all_spikes,int(bin_amount),(start_time,end_time))
+        average_spikes_in_bin = hist1 / float(len(event_dic[taste]))
+        if normalize == 'Hz':
+            spikes_in_bin = average_spikes_in_bin / bin_width
+        norm_curve = savitzky_golay(spikes_in_bin,9,3)
+        psth_ax.plot(bin_edges[:-1],norm_curve,label=taste,color=get_color_for_taste(taste))
+    psth_ax.set_xlabel('time')
+    if normalize == 'Hz':
+        psth_ax.set_ylabel('Fire rate - spikes / s (Hz)')
+    else:
+        psth_ax.set_ylabel('spikes')
+    psth_ax.axvline(0, linestyle='--', color='k') # vertical lines
+    psth_ax.legend()
+    # plt.show()
+    return raster_ax, psth_ax
