@@ -12,7 +12,8 @@ from scipy.io import loadmat
 from scipy.stats import ttest_ind as Ttest
 from scipy.signal import butter, lfilter, filtfilt
 from math import factorial
-from moran_lab.plotter import adjust_ylim,plot_psth_with_rasters_for_axes
+from moran_lab.plotter import adjust_ylim,plot_psth_with_rasters_for_axes,our_ts_plot
+from moran_lab.pickle_data_analysis.lfp_functions import spike_triggered_LFP
 import seaborn as sns
 
 plt.rcParams['axes.facecolor']='white'
@@ -106,11 +107,13 @@ class pickle_loader(object):
                                                            ['sugar', 'water'])
 
         print("plotting CV anf FF")
-        ax_downM.plot(hours_per_point * np.arange(len(smooth_CV)), smooth_CV, label="CV")
+        ax_downM.plot(hours_per_point * np.arange(len(smooth_CV)), smooth_CV, label="CV",color='b')
         ax_downM.vlines(batch_times_in_hours, 0, 1, 'g', linestyles='dashed', linewidth=2, label='batch times')
+        ax_downM.plot(hours_per_point * np.arange(len(smooth_FF)), smooth_FF, label="FF",color='r')
 
-        ax_downR.plot(hours_per_point * np.arange(len(smooth_FF)), smooth_FF, label="FF")
-        ax_downR.vlines(batch_times_in_hours, 0, 1, 'g', linestyles='dashed', linewidth=2, label='batch times')
+        if self.lfp_data:
+            ax_downR = spike_triggered_LFP(ax_downR, N0FR, self.lfp_data, FS=self.lfp_FS,
+                                                   LFP_start=-0.5, LFP_stop=0.1, num_of_stds=5)[0]
 
         print("plotting BL firing rate and waveforms")
         if len(self.data['neurons'][neuron_num]) > 3:
@@ -130,8 +133,8 @@ class pickle_loader(object):
         ax_upM.set_title("BL Firing Rate", fontsize=14)
         ax_upR.set_title("Waveforms", fontsize=14)
         ax_downL.set_title("PSTH", fontsize=14)
-        ax_downM.set_title("CV", fontsize=14)
-        ax_downR.set_title("FF", fontsize=14)
+        ax_downM.set_title("CV and FF", fontsize=14)
+        ax_downR.set_title("Spike Triggered LFP", fontsize=14)
 
         for ax in (ax_upM, ax_downM, ax_downR):
             ax.legend()
@@ -142,6 +145,41 @@ class pickle_loader(object):
             fig.savefig('full showing of neuron {}-{}.svg'.format(elec, cluster), format='svg')
         else:
             plt.show()
+
+    def show_spike_triggered_LFP_sig(self,elec,cluster,start_time_in_secs = None, stop_time_in_secs = None, LFP_start = -0.5, LFP_stop = 0.1,show=False,save_fig=False,num_of_stds=3):
+        """
+        :param elec: elec num of neuron
+        :param cluster: cluster num of neuron
+        :param start_time_in_secs: start of spiking window to look at, example: 22h and 15m = 22*3600+15*60
+        :param stop_time_in_secs: end of spiking window to look at, example: 22h and 15m = 22*3600+15*60
+        :param LFP_start: how many secs to look at LFP before spike time (should probably be -something, like -0.5 secs)
+        :param LFP_stop: how many secs to look at LFP after spike time
+        :param show: whether to show plot
+        :param save_fig: whwther to save the fig
+        :return: matrix of lfp data (rows = trials, coloumn = LFP data), bottom edge, mean plot, top edge.
+        """
+        if not self.lfp_data:
+            print("cannot calculate, no LFP data present in model")
+            return None
+
+        fig = plt.figure(figsize=(20,15))
+        ax = fig.add_subplot(1,1,1)
+
+        num = get_neuron_num_from_dic(self.data, elec, cluster)
+        spike_train = self.data["neurons"][num][2]
+
+        ax, res_mat, y2, x, y1 = spike_triggered_LFP(ax, spike_train, self.lfp_data, FS = self.lfp_FS,
+                                                     start_time_in_secs = start_time_in_secs,
+                                                     stop_time_in_secs = stop_time_in_secs,
+                                                     LFP_start = LFP_start, LFP_stop = LFP_stop, num_of_stds=num_of_stds)
+        if save_fig:
+            fig.savefig('spike triggered LFP for {}-{}.jpeg'.format(elec,cluster), format='jpeg')
+            fig.savefig('spike triggered LFP for {}-{}.svg'.format(elec,cluster), format='svg')
+
+        if show:
+            plt.show()
+
+        return res_mat,y2, x, y1
 
     def resave_as_new_pickle_dic(self, filename):
         save_file = self.mother_directory + filename + '.pkl'

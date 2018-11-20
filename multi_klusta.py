@@ -18,13 +18,11 @@ def get_amp_din_data(file):
     full_din_data = a['board_dig_in_data']
     return full_amp_data,full_din_data
 
-
 def get_amp_names(file):
     a = load_rhd.read_data(file)
     amps = [a['amplifier_channels'][i]['native_channel_name'] for i in range(len(a['amplifier_channels']))]
     dins = [a['board_dig_in_channels'][i]['native_channel_name'] for i in range(len(a['board_dig_in_channels']))]
     return sorted(amps),sorted(dins)
-
 
 def merge_directories(first_dir,second_dir,out_dir,amp_letter="A"):
     file_list = ["amp-"+amp_letter+"-{0:03}.dat".format(i) for i in range(32)]

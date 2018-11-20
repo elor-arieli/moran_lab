@@ -433,3 +433,18 @@ def plot_psth_with_rasters_for_axes(raster_ax, psth_ax, spike_train,event_dic,ta
     psth_ax.legend()
     # plt.show()
     return raster_ax, psth_ax
+
+def our_ts_plot(ax,mat,num_of_stds=3):
+    """
+    :param ax: the plotting upon ax
+    :param mat: the mat, rows = samples, columns = values.
+    :param num_of_stds: amount of SEMs to plot on each side
+    :return: ax, bottom edge, mean values, top edge
+    """
+    stds = np.std(mat,axis=0)/np.sqrt(mat.shape[0])
+    means = np.mean(mat,axis=0)
+    y1 = means+num_of_stds*stds
+    y2 = means-num_of_stds*stds
+    ax.plot(means,color='b',lw=2)
+    ax.fill_between(np.arange(len(y1)),y1, y2, color='blue', alpha='0.2')
+    return ax,y2,means,y1
