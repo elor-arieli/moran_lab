@@ -14,6 +14,7 @@ from scipy.signal import butter, lfilter, filtfilt
 from math import factorial
 from moran_lab.plotter import adjust_ylim,plot_psth_with_rasters_for_axes,our_ts_plot
 from moran_lab.pickle_data_analysis.lfp_functions import spike_triggered_LFP
+from moran_lab.pickle_data_analysis.lfp_functions import spectrum_power_over_time as single_band_PSD_over_time
 import seaborn as sns
 
 plt.rcParams['axes.facecolor']='white'
@@ -44,6 +45,99 @@ class pickle_loader(object):
                                       'sacc': split_event_times_by_batches(self.data['event_times']['sugar'],
                                                                            self.event_times_in_secs['sacc batch times'])}
 
+    def plot_LFP_corr_heatmaps_for_critical_times(self, average_every_x_minutes = 1, smooth = True,
+                                                  normalize = True, use_zscore = True, save=True, top_title=''):
+        if type(self.lfp_data) not in (np.ndarray,np.array,list):
+            print("no LFP data file was loaded, cannot slice")
+            return
+
+        fig = plt.figure(figsize=(20, 15), dpi=1000)
+        fig.clf()
+        ax1 = fig.add_subplot(221)
+        ax2 = fig.add_subplot(222)
+        ax3 = fig.add_subplot(223)
+        ax4 = fig.add_subplot(224)
+
+        names = ['correlation mat during drinking', 'correlation mat drinking => CTA', 'correlation mat CTA +0h => +3h',
+                 'correlation mat CTA +3h => +6h']
+
+        start_times = [0,20,80,260]
+        stop_times = [20,80,260,440]
+
+        for i, ax in enumerate([ax1, ax2, ax3, ax4]):
+            ax = self.plot_corr_heatmap_for_slice(ax=ax, start_time=start_times[i], stop_time=stop_times[i],
+                                                  count_from_drinking_session=True, time_units="minutes",
+                                                  average_every_x_minutes=average_every_x_minutes, smooth=smooth,
+                                                  normalize=normalize, use_zscore=use_zscore, title=names[i])
+
+        fig.suptitle(top_title,fontsize=22)
+
+        if save:
+            stringy = "correlation between bands across stages of learning"
+            if top_title != '':
+                stringy = top_title + " " + stringy
+            fig.savefig(stringy+'.jpeg', format='jpeg')
+            fig.savefig(stringy+'.svg', format='svg')
+        else:
+            plt.show()
+        return
+
+    def plot_corr_heatmap_for_slice(self, ax, start_time=0, stop_time=440, count_from_drinking_session=True,
+                                    time_units="minutes", average_every_x_minutes = 1, smooth = True,
+                                    normalize = True, use_zscore = True, title=""):
+        if type(self.lfp_data) not in (np.ndarray, np.array, list):
+            print("no LFP data file was loaded, cannot slice")
+            return
+
+        data_mat,band_list = self.get_correlations_for_lfp_slice(start_time=start_time, stop_time=stop_time,
+                                                       count_from_drinking_session=count_from_drinking_session,
+                                                       time_units=time_units, average_every_x_minutes = average_every_x_minutes,
+                                                       smooth = smooth, normalize = normalize, use_zscore = use_zscore)
+
+
+        sns.heatmap(data_mat, annot=True, ax=ax, annot_kws={"size": 12})
+
+        # bla = sns.heatmap(corr_coef_during_drinking, annot=True)
+        # cbar = plt.colorbar(bla
+        ax.set_xticks(np.arange(5) + 0.5)
+        ax.set_xticklabels(['delta', 'theta', 'alpha', 'beta', 'gamma'], fontsize=14)
+        ax.set_yticks(np.arange(5) + 0.5)
+        ax.set_yticklabels(['delta', 'theta', 'alpha', 'beta', 'gamma'][::-1], rotation=0, fontsize=14)
+        #     ax.xaxis.xticks(np.arange(5)+0.5,['delta','theta','alpha','beta','gamma'])
+        #     ax.xaxis.yticks(np.arange(5)+0.5,['delta','theta','alpha','beta','gamma'][::-1],rotation=0)
+        ax.set_title(title, fontsize=18)
+
+        return ax
+
+    def get_correlations_for_lfp_slice(self, start_time=0, stop_time=440, count_from_drinking_session=True,
+                                       time_units="minutes", average_every_x_minutes = 1, smooth = True,
+                                       normalize = True, use_zscore = True):
+
+        if type(self.lfp_data) not in (np.ndarray, np.array, list):
+            print("no LFP data file was loaded, cannot slice")
+            return
+
+        LFP_slice = self.get_lfp_slice(start_time=start_time, stop_time=stop_time,
+                                       count_from_drinking_session=count_from_drinking_session,time_units=time_units)
+
+        Delta = single_band_PSD_over_time(LFP_slice, fs = self.lfp_FS, average_every_x_minutes = average_every_x_minutes,
+                                          band = 'Delta', smooth = smooth, normalize = normalize, use_zscore = use_zscore)
+
+        Theta = single_band_PSD_over_time(LFP_slice, fs = self.lfp_FS, average_every_x_minutes = average_every_x_minutes,
+                                          band = 'Theta', smooth = smooth, normalize = normalize, use_zscore = use_zscore)
+
+        Alpha = single_band_PSD_over_time(LFP_slice, fs = self.lfp_FS, average_every_x_minutes = average_every_x_minutes,
+                                          band = 'Alpha', smooth = smooth, normalize = normalize, use_zscore = use_zscore)
+
+        Beta = single_band_PSD_over_time(LFP_slice, fs = self.lfp_FS, average_every_x_minutes = average_every_x_minutes,
+                                         band = 'Beta', smooth = smooth, normalize = normalize, use_zscore = use_zscore)
+
+        Gamma = single_band_PSD_over_time(LFP_slice, fs = self.lfp_FS, average_every_x_minutes = average_every_x_minutes,
+                                          band = 'Gamma', smooth = smooth, normalize = normalize, use_zscore = use_zscore)
+
+        return np.corrcoef([Delta,Theta,Alpha,Beta,Gamma]),["Delta","Theta","Alpha","Beta","Gamma"]
+
+
     def merge_neurons(self, elec, cluster1, cluster2):
         neuron1 = get_neuron_num_from_dic(self.data, elec, cluster1)
         neuron2 = get_neuron_num_from_dic(self.data, elec, cluster2)
@@ -55,6 +149,22 @@ class pickle_loader(object):
                     sorted(np.concatenate(self.data["neurons"][neuron1][3], self.data["neurons"][neuron2][3])))
             del self.data["neurons"][neuron2]
         return
+
+    def get_lfp_slice(self,start_time=0,stop_time=440,count_from_drinking_session=True,time_units="minutes"):
+        if type(self.lfp_data) not in (np.ndarray, np.array, list):
+            print("no LFP data file was loaded, cannot slice")
+            return
+
+        units = {"minutes": 60, "hours": 3600, "seconds": 1}
+        start_index = start_time * self.lfp_FS * units[time_units]
+        stop_index = stop_time * self.lfp_FS * units[time_units]
+
+        if count_from_drinking_session:
+            added_indexs = self.event_times_in_secs['session start']*self.lfp_FS
+            start_index += added_indexs
+            stop_index += added_indexs
+
+        return self.lfp_data[int(start_index):int(stop_index)]
 
     def remove_neurons(self,tuple_list):
         assert isinstance(tuple_list, list), "must recieve a list of (elec,cluster) tuples"
