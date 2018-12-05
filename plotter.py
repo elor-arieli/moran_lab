@@ -1,6 +1,6 @@
 __author__ = 'elor'
 
-from band_pass_filters import savitzky_golay
+from moran_lab.band_pass_filters import savitzky_golay
 from matplotlib import pyplot as plt
 import numpy as np
 from scipy.signal import welch,spectrogram

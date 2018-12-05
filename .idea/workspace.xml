@@ -4,8 +4,7 @@
     <list default="true" id="8932ca1c-b891-493b-a39a-bd3f31b54520" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pickle_data_analysis/lfp_functions.py" afterPath="$PROJECT_DIR$/pickle_data_analysis/lfp_functions.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pickle_data_analysis/load_long_record_pickle.py" afterPath="$PROJECT_DIR$/pickle_data_analysis/load_long_record_pickle.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pickle_spike_train_analysis.py" afterPath="$PROJECT_DIR$/pickle_spike_train_analysis.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plotter.py" afterPath="$PROJECT_DIR$/plotter.py" />
     </list>
     <ignored path="moran_lab.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -58,14 +57,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="plotter.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="plotter.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/plotter.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="7310">
-              <caret line="436" column="36" selection-start-line="436" selection-start-column="36" selection-end-line="436" selection-end-column="36" />
-              <folding>
-                <element signature="e#21#65#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="34">
+              <caret line="2" column="54" selection-start-line="2" selection-start-column="54" selection-end-line="2" selection-end-column="54" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -80,11 +77,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="load_long_record_pickle.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="load_long_record_pickle.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pickle_data_analysis/load_long_record_pickle.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="234">
-              <caret line="57" column="34" selection-start-line="57" selection-start-column="34" selection-end-line="57" selection-end-column="34" />
+            <state relative-caret-position="3519">
+              <caret line="224" column="33" selection-start-line="224" selection-start-column="33" selection-end-line="224" selection-end-column="33" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
                 <element signature="e#13579#15302#0" expanded="false" />
@@ -99,14 +96,13 @@
       <file leaf-file-name="lfp_functions.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pickle_data_analysis/lfp_functions.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="205">
-              <caret line="167" column="28" selection-start-line="167" selection-start-column="28" selection-end-line="167" selection-end-column="130" />
+            <state relative-caret-position="612">
+              <caret line="36" column="39" selection-start-line="36" selection-start-column="39" selection-end-line="36" selection-end-column="39" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
-                <element signature="e#604#2229#0" expanded="false" />
-                <element signature="e#2354#2896#0" expanded="false" />
-                <element signature="e#3007#3627#0" expanded="false" />
-                <element signature="e#3916#6855#0" expanded="false" />
+                <element signature="e#2566#3108#0" expanded="false" />
+                <element signature="e#3219#3839#0" expanded="false" />
+                <element signature="e#4128#7067#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -125,8 +121,8 @@
       <file leaf-file-name="multi_klusta.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/multi_klusta.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="527">
-              <caret line="154" column="0" selection-start-line="154" selection-start-column="0" selection-end-line="154" selection-end-column="0" />
+            <state relative-caret-position="2142">
+              <caret line="132" column="8" selection-start-line="132" selection-start-column="8" selection-end-line="159" selection-end-column="24" />
               <folding>
                 <element signature="e#21#30#0" expanded="true" />
               </folding>
@@ -176,10 +172,10 @@
         <option value="$PROJECT_DIR$/multi_file_handler/multi_lfp_loader.py" />
         <option value="$PROJECT_DIR$/spike_sort.py" />
         <option value="$PROJECT_DIR$/multi_klusta.py" />
-        <option value="$PROJECT_DIR$/plotter.py" />
         <option value="$PROJECT_DIR$/pickle_spike_train_analysis.py" />
-        <option value="$PROJECT_DIR$/pickle_data_analysis/lfp_functions.py" />
         <option value="$PROJECT_DIR$/pickle_data_analysis/load_long_record_pickle.py" />
+        <option value="$PROJECT_DIR$/pickle_data_analysis/lfp_functions.py" />
+        <option value="$PROJECT_DIR$/plotter.py" />
       </list>
     </option>
   </component>
@@ -220,6 +216,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -282,8 +280,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -591,7 +587,14 @@
       <option name="project" value="LOCAL" />
       <updated>1542713804759</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="29/11/18 - added lfp slicing function, power spectrum analyzer for time slices and correlation heatmaps of LFP freqs">
+      <created>1543503761620</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1543503761620</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TodoView">
@@ -680,7 +683,8 @@
     <MESSAGE value="18/11/18 - added remove neurons, merge neurons and resave pickle dic to Pickle Loader" />
     <MESSAGE value="19/11/18 - fixed small error in merge_neurons.&#10; added display neuron that shows all important params.&#10; added display all neurons.&#10; fixed issue with calcCV and calcFF&#10; added psth and raster plotter that gets and return by axes to plotter." />
     <MESSAGE value="20/11/18 - added spike triggered lfp analysis to Pickle loader.&#10;merged CV and FF together in display neuron and added spike triggered lfp instead.&#10;added our_ts_plot to plotter" />
-    <option name="LAST_COMMIT_MESSAGE" value="20/11/18 - added spike triggered lfp analysis to Pickle loader.&#10;merged CV and FF together in display neuron and added spike triggered lfp instead.&#10;added our_ts_plot to plotter" />
+    <MESSAGE value="29/11/18 - added lfp slicing function, power spectrum analyzer for time slices and correlation heatmaps of LFP freqs" />
+    <option name="LAST_COMMIT_MESSAGE" value="29/11/18 - added lfp slicing function, power spectrum analyzer for time slices and correlation heatmaps of LFP freqs" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -967,7 +971,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="418">
           <caret line="4696" column="73" selection-start-line="4696" selection-start-column="66" selection-end-line="4696" selection-end-column="73" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -989,16 +992,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/multi_file_handler/multi_lfp_loader.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19669">
-          <caret line="1174" column="27" selection-start-line="1174" selection-start-column="27" selection-end-line="1174" selection-end-column="27" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1034,16 +1027,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/plotter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7310">
-          <caret line="436" column="36" selection-start-line="436" selection-start-column="36" selection-end-line="436" selection-end-column="36" />
-          <folding>
-            <element signature="e#21#65#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pickle_spike_train_analysis.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
@@ -1057,32 +1040,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/multi_klusta.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="154" column="0" selection-start-line="154" selection-start-column="0" selection-end-line="154" selection-end-column="0" />
+        <state relative-caret-position="2142">
+          <caret line="132" column="8" selection-start-line="132" selection-start-column="8" selection-end-line="159" selection-end-column="24" />
           <folding>
             <element signature="e#21#30#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pickle_data_analysis/lfp_functions.py">
+    <entry file="file://$PROJECT_DIR$/multi_file_handler/multi_lfp_loader.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="205">
-          <caret line="167" column="28" selection-start-line="167" selection-start-column="28" selection-end-line="167" selection-end-column="130" />
+        <state relative-caret-position="19669">
+          <caret line="1174" column="27" selection-start-line="1174" selection-start-column="27" selection-end-line="1174" selection-end-column="27" />
           <folding>
-            <element signature="e#0#30#0" expanded="true" />
-            <element signature="e#604#2229#0" expanded="false" />
-            <element signature="e#2354#2896#0" expanded="false" />
-            <element signature="e#3007#3627#0" expanded="false" />
-            <element signature="e#3916#6855#0" expanded="false" />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pickle_data_analysis/load_long_record_pickle.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="57" column="34" selection-start-line="57" selection-start-column="34" selection-end-line="57" selection-end-column="34" />
+        <state relative-caret-position="3519">
+          <caret line="224" column="33" selection-start-line="224" selection-start-column="33" selection-end-line="224" selection-end-column="33" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
             <element signature="e#13579#15302#0" expanded="false" />
@@ -1090,6 +1069,27 @@
             <element signature="e#65277#65374#0" expanded="false" />
             <element signature="e#65427#65594#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pickle_data_analysis/lfp_functions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="612">
+          <caret line="36" column="39" selection-start-line="36" selection-start-column="39" selection-end-line="36" selection-end-column="39" />
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
+            <element signature="e#2566#3108#0" expanded="false" />
+            <element signature="e#3219#3839#0" expanded="false" />
+            <element signature="e#4128#7067#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plotter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="54" selection-start-line="2" selection-start-column="54" selection-end-line="2" selection-end-column="54" />
+          <folding />
         </state>
       </provider>
     </entry>

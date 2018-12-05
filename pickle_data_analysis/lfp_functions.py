@@ -11,10 +11,10 @@ import scipy
 from scipy.stats import signaltonoise as calcSNR
 from scipy.stats import zscore
 from moran_lab.plotter import our_ts_plot
-from moran_lab.band_pass_filters import savitzky_golay
+from moran_lab.band_pass_filters import savitzky_golay, butter_bandpass_filter
 
 
-def spike_triggered_LFP(ax, spike_train, LFP_data, FS=300, start_time_in_secs=None, stop_time_in_secs=None, LFP_start=-0.5, LFP_stop=0.1, num_of_stds=3):
+def spike_triggered_LFP(ax, spike_train, LFP_data, FS=300, start_time_in_secs=None, stop_time_in_secs=None, LFP_start=-0.5, LFP_stop=0.1, num_of_stds=3, band=False):
 
     if start_time_in_secs is None:
         start_time_in_secs = 0
@@ -40,8 +40,10 @@ def spike_triggered_LFP(ax, spike_train, LFP_data, FS=300, start_time_in_secs=No
 
     for i, spike_time in enumerate(spike_train):
         j = int(spike_time*FS)
-
-        res_mat[i,:] = LFP_data[j+start_index_fix:j+stop_index_fix]
+        if band is False:
+            res_mat[i,:] = LFP_data[j+start_index_fix:j+stop_index_fix]
+        else:
+            res_mat[i,:] = butter_bandpass_filter(LFP_data[j+start_index_fix:j+stop_index_fix],fs=FS,lowcut=band[0],highcut=band[1])
 
 #     print(res_mat.shape,res_mat)
     ax,y2,x,y1 = our_ts_plot(ax,res_mat,num_of_stds)
