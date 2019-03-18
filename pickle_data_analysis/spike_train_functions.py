@@ -14,10 +14,42 @@ from mpl_toolkits.mplot3d import proj3d
 from sklearn import manifold
 from sklearn.metrics import euclidean_distances
 # from sklearn.decomposition import PCA
+from scipy.stats import zscore
+
 
 def find_nearest(array,value):
     idx = (np.abs(array-value)).argmin()
     return array[idx]
+
+
+def get_all_responses_in_time_frame(spike_train, event_list, choice_start_time, choice_end_time, psth_start_time, psth_stop_time, use_zscore=False):
+    """
+    :param spike_times: list of spike times
+    :param event_list: list of taste event time
+    :param choice_start_time: time in seconds from which to start looking at the events
+    :param choice_end_time: time in seconds until which to look at the events
+    :param psth_start_time: left edge of psth in seconds
+    :param psth_stop_time: right edge of psth in seconds
+    :param zscore: True for zscore normalization
+    :return: a trial by time matrix
+    """
+
+    response_mat = []
+    timed_event_list = [i for i in event_list if choice_start_time < i < choice_end_time]
+    for event in timed_event_list:
+        # get the spike times that are in the range of start-stop from each event.
+        left_border = np.searchsorted(spike_train - event, psth_start_time)
+        right_border = np.searchsorted(spike_train - event, psth_stop_time)
+        spikes = spike_train[left_border:right_border] - event
+        hist1, bin_edges = np.histogram(all_spikes, 100, (psth_start_time, psth_stop_time))
+        spikes_in_bin = average_spikes_in_bin / 0.05
+        norm_curve = savitzky_golay(spikes_in_bin, 9, 3)
+        if use_zscore:
+            response_mat.append(zscore(norm_curve))
+        else:
+            response_mat.append(norm_curve/np.median(norm_curve[:20]))
+    return np.array(response_mat)
+
 
 def create_psth_matrix_for_pca(all_neurons_spike_times, event_dic,bad_elec_list=[]):
     matrix_dic = []

@@ -211,7 +211,7 @@ def plot_psth_with_rasters(electrode, cluster,spike_train,event_dic,taste_list,b
         for ith, trial in enumerate(event_times_list):
             ax1.vlines(trial, j + ith + .5, j + ith + 1.5, color=get_color_for_taste(taste))
         j += len(event_times_list)
-    ax1.set_ylim(.5, len(event_times_list)*len(taste_list) + .5)
+    ax1.set_ylim(.5, j + .5)
     ax1.set_xlabel('time')
     ax1.set_ylabel('trial')
     ax1.axvline(0, linestyle='--', color='k') # vertical lines
@@ -373,7 +373,7 @@ def adjust_ylim(ax1,ax2):
     ax2.set_ylim(minylim,maxylim)
     return
 
-def plot_psth_with_rasters_for_axes(raster_ax, psth_ax, spike_train,event_dic,taste_list,bin_width=0.05,start_time=-1,end_time=4,overlap=0,normalize='Hz'):
+def plot_psth_with_rasters_for_axes(raster_ax, psth_ax, spike_train,event_dic,taste_list,bin_width=0.05,start_time=-1,end_time=4,overlap=0,normalize='Hz',plot_first_last=True):
     """
     plots a figure with 2 subplots, the top will be a raster with all tastes given in the list. the bottom will be a PSTH with the tastes given in the list.
     spike train is a list of spike times.
@@ -410,20 +410,24 @@ def plot_psth_with_rasters_for_axes(raster_ax, psth_ax, spike_train,event_dic,ta
     ############ PSTH ##############
 
     bin_amount = (end_time-start_time)//bin_width
-    all_spikes = np.array([])
+    all_spikes = []
     for taste in taste_list:
         for event in event_dic[taste]:
         # get the spike times that are in the range of start-stop from each event.
             left_border = np.searchsorted(spike_train - event, -1)
             right_border = np.searchsorted(spike_train - event, 4)
             spikes = spike_train[left_border:right_border] - event
-            all_spikes = np.concatenate((all_spikes,spikes))
+            all_spikes.append(spikes)
+        all_spikes = np.array(all_spikes)
         hist1,bin_edges = np.histogram(all_spikes,int(bin_amount),(start_time,end_time))
         average_spikes_in_bin = hist1 / float(len(event_dic[taste]))
         if normalize == 'Hz':
             spikes_in_bin = average_spikes_in_bin / bin_width
         norm_curve = savitzky_golay(spikes_in_bin,9,3)
         psth_ax.plot(bin_edges[:-1],norm_curve,label=taste,color=get_color_for_taste(taste))
+        ts_color = {"sugar early": '#01FF70', "sugar late": '#3D9970', "water early": "#7FDBFF", "water late": "#001f3f"}
+        our_ts_plot(psth_ax, all_spikes[:30, :],color=ts_color[taste+' early'])
+        our_ts_plot(psth_ax, all_spikes[-30:, :],color=ts_color[taste+' late'])
     psth_ax.set_xlabel('time')
     if normalize == 'Hz':
         psth_ax.set_ylabel('Fire rate - spikes / s (Hz)')
@@ -434,7 +438,7 @@ def plot_psth_with_rasters_for_axes(raster_ax, psth_ax, spike_train,event_dic,ta
     # plt.show()
     return raster_ax, psth_ax
 
-def our_ts_plot(ax,mat,num_of_stds=3):
+def our_ts_plot(ax,mat,num_of_stds=3,color='b'):
     """
     :param ax: the plotting upon ax
     :param mat: the mat, rows = samples, columns = values.
@@ -445,6 +449,6 @@ def our_ts_plot(ax,mat,num_of_stds=3):
     means = np.mean(mat,axis=0)
     y1 = means+num_of_stds*stds
     y2 = means-num_of_stds*stds
-    ax.plot(means,color='b',lw=2)
-    ax.fill_between(np.arange(len(y1)),y1, y2, color='blue', alpha='0.2')
+    ax.plot(means,color=color,lw=2)
+    ax.fill_between(np.arange(len(y1)),y1, y2, color=color, alpha='0.2')
     return ax,y2,means,y1

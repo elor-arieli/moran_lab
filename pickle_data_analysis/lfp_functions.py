@@ -12,7 +12,32 @@ from scipy.stats import signaltonoise as calcSNR
 from scipy.stats import zscore
 from moran_lab.plotter import our_ts_plot
 from moran_lab.band_pass_filters import savitzky_golay, butter_bandpass_filter
+from moran_lab.pickle_data_analysis.extra_functions import get_events_between_times
+from scipy.ndimage.filters import gaussian_filter
 
+def average_response_spectogram(lfp_data, event_times, fs=300,filtered=True,sigma=3):
+    mats = []
+    for t in event_times:
+        start_index = int(t*300-600)
+        stop_index = int(t*300+1500)
+        freq_ax, time_ax, Sxx = spectrogram(lfp_data[start_index:stop_index], 300, nperseg=80, noverlap=60, nfft=300)
+        if filtered:
+            mats.append(gaussian_filter(zscore(Sxx[:,:]), [sigma,sigma], mode='constant'))
+        else:
+            mats.append(zscore(Sxx[:,:]))
+    return time_ax[13:-13]-2.0, freq_ax[:51], np.array(mats)[:,:51,13:-13]
+
+def plot_average_spectogram_in_time_slice(ax, lfp_data, event_times, start_time, stop_time, fs=300, filtered=True, sigma=3):
+    real_event_times = get_events_between_times(event_times, start_time, stop_time)
+    time_ax, freq_ax, Sxx_mat = average_response_spectogram(lfp_data, real_event_times, fs=fs,
+                                                            filtered=filtered, sigma=sigma)
+    im = ax.pcolormesh(time_ax, freq_ax, Sxx_mat.mean(axis=0), cmap='jet')
+    divider = make_axes_locatable(axes[2])
+    cax = divider.append_axes("right", size="5%", pad=0.05, fontsize=14)
+    ax.colorbar(im, cax=cax)
+    ax.set_xlabel("Time (sec)",fontsize=14)
+    ax.set_ylabel("Frequency (Hz)",fontsize=14)
+    return ax
 
 def spike_triggered_LFP(ax, spike_train, LFP_data, FS=300, start_time_in_secs=None, stop_time_in_secs=None, LFP_start=-0.5, LFP_stop=0.1, num_of_stds=3, band=False):
 

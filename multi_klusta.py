@@ -214,6 +214,20 @@ def move_kwiks(base_file_name='amp-A-',start_val=0,stop_val=32):
         os.chdir('..')
     return
 
+def undersample(in_file,out_file,undersample_factor=[10,10]):
+    assert isinstance(undersample_factor,(list,tuple)),"undersample factor must be a list or tuple."
+    with open(in_file,'rb') as in_f:
+        with open(out_file,'wb') as out_f:
+            data = np.fromfile(in_f,dtype=np.int16,count=3000000)
+            while len(data)>0:
+                if len(undersample_factor) == 2:
+                    filtered_once = decimate(data,undersample_factor[0],zero_phase=True)
+                    filtered_twice = decimate(filtered_once,undersample_factor[1],zero_phase=True)
+                else:
+                    filtered_twice = decimate(data,undersample_factor[0],zero_phase=True)
+                filtered_twice.astype('int16').tofile(out_f)
+                data = np.fromfile(in_f,dtype=np.int16,count=3000000)
+
 def run_kwik_gui(base_file_name='amp-A-',start_val=0,stop_val=32):
     if isinstance(start_val,list):
         file_list = [base_file_name + "{0:03}".format(i) for i in start_val]

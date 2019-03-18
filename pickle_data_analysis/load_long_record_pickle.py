@@ -13,7 +13,7 @@ from scipy.stats import ttest_ind as Ttest
 from scipy.signal import butter, lfilter, filtfilt
 from math import factorial
 from moran_lab.plotter import adjust_ylim,plot_psth_with_rasters_for_axes,our_ts_plot
-from moran_lab.pickle_data_analysis.lfp_functions import spike_triggered_LFP
+from moran_lab.pickle_data_analysis.lfp_functions import spike_triggered_LFP,plot_average_spectogram_in_time_slice,average_response_spectogram
 from moran_lab.pickle_data_analysis.lfp_functions import spectrum_power_over_time as single_band_PSD_over_time
 import seaborn as sns
 
@@ -44,6 +44,9 @@ class pickle_loader(object):
                                                                             self.event_times_in_secs['water batch times']),
                                       'sacc': split_event_times_by_batches(self.data['event_times']['sugar'],
                                                                            self.event_times_in_secs['sacc batch times'])}
+
+
+    # def compare_average_spectogram_in_time_slice(ax, lfp_data, event_times, start_time, stop_time, fs=300, filtered=True, sigma=3):
 
     def plot_LFP_corr_heatmaps_for_critical_times(self, average_every_x_minutes = 1, smooth = True,
                                                   normalize = True, use_zscore = True, save=True, top_title=''):
@@ -221,7 +224,7 @@ class pickle_loader(object):
         ax_downM.vlines(batch_times_in_hours, 0, 1, 'g', linestyles='dashed', linewidth=2, label='batch times')
         ax_downM.plot(hours_per_point * np.arange(len(smooth_FF)), smooth_FF, label="FF",color='r')
 
-        if self.lfp_data:
+        if self.lfp_data is not False:
             ax_downR = spike_triggered_LFP(ax_downR, N0FR, self.lfp_data, FS=self.lfp_FS,
                                                    LFP_start=-0.5, LFP_stop=0.1, num_of_stds=5)[0]
 
@@ -1367,7 +1370,23 @@ def get_neuron_num_from_dic(dic,elec,cluster):
     print('no neuron found with elec = {}, cluster = {}, returning None'.format(elec,cluster))
     return None
 
+def undersample(in_file,out_file,undersample_factor=[10,10]):
+    assert isinstance(undersample_factor,(list,tuple)),"undersample factor must be a list or tuple."
+    with open(in_file,'rb') as in_f:
+        with open(out_file,'wb') as out_f:
+            data = np.fromfile(in_f,dtype=np.int16,count=3000000)
+            while len(data)>0:
+                if len(undersample_factor) == 2:
+                    filtered_once = decimate(data,undersample_factor[0],zero_phase=True)
+                    filtered_twice = decimate(filtered_once,undersample_factor[1],zero_phase=True)
+                else:
+                    filtered_twice = decimate(data,undersample_factor[0],zero_phase=True)
+                filtered_twice.astype('int16').tofile(out_f)
+                data = np.fromfile(in_f,dtype=np.int16,count=3000000)
+
 def undersample_file(in_file,out_file,current_FS=30000, new_FS=300, filter=True, low_pass=500):
+    print("please do not use this function - use multi_klusta.undersample instead")
+    return
     open_read_file = open(in_file + '.dat', 'r+b')
     open_write_file = open(out_file + '.dat', 'wb')
 
@@ -1402,3 +1421,12 @@ def undersample_file(in_file,out_file,current_FS=30000, new_FS=300, filter=True,
                 open_write_file.write(by)
     open_read_file.close()
     open_write_file.close()
+
+def get_event_times_from_pickle(filename):
+    with (open(filename, "rb")) as openfile:
+        while True:
+            try:
+                data = pickle.load(openfile)
+            except EOFError:
+                break
+    return data['event_times']['water'], data['event_times']['sugar']
