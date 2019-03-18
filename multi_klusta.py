@@ -7,6 +7,8 @@ import fileinput
 import load_intan_rhd_format as load_rhd
 import glob
 import tqdm
+from scipy.signal import decimate
+
 # import yaml
 
 def turn_amplifier_arr_to_bytes(arr):

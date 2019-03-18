@@ -10,7 +10,7 @@ import os
 from moran_lab.band_pass_filters import butter_bandpass
 from scipy.io import loadmat
 from scipy.stats import ttest_ind as Ttest
-from scipy.signal import butter, lfilter, filtfilt
+from scipy.signal import butter, lfilter, filtfilt, decimate
 from math import factorial
 from moran_lab.plotter import adjust_ylim,plot_psth_with_rasters_for_axes,our_ts_plot
 from moran_lab.pickle_data_analysis.lfp_functions import spike_triggered_LFP,plot_average_spectogram_in_time_slice,average_response_spectogram
