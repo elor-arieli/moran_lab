@@ -7,6 +7,8 @@ import fileinput
 import load_intan_rhd_format as load_rhd
 import glob
 import tqdm
+import cv2
+from moran_lab.band_pass_filters import savitzky_golay
 from scipy.signal import decimate
 
 # import yaml
@@ -230,6 +232,7 @@ def undersample(in_file,out_file,undersample_factor=[10,10]):
                 filtered_twice.astype('int16').tofile(out_f)
                 data = np.fromfile(in_f,dtype=np.int16,count=3000000)
 
+
 def run_kwik_gui(base_file_name='amp-A-',start_val=0,stop_val=32):
     if isinstance(start_val,list):
         file_list = [base_file_name + "{0:03}".format(i) for i in start_val]
@@ -238,6 +241,31 @@ def run_kwik_gui(base_file_name='amp-A-',start_val=0,stop_val=32):
     for name in file_list:
         os.system('phy kwik-gui ' + name + '\\' + name + '.kwik')
     return
+
+
+def analyze_movement_from_vid(vid, output_file=None):
+    if output_file is None:
+        output_file = vid[:-4]
+
+    arr = []
+    vidcap = cv2.VideoCapture(vid)
+    success, last_frame = vidcap.read()
+    last_frame = cv2.cvtColor(last_frame, cv2.COLOR_BGR2GRAY)
+    counter = 0
+    while success:
+        counter += 1
+        if counter % 10000 == 0:
+            hours = counter // 108000
+            minutes = (counter % 108000) // 1800
+            secs = ((counter % 108000) % 1800) // 30
+            print("{}:{}:{} finished".format(hours, minutes, secs))
+        success, new_frame = vidcap.read()
+        if success:
+            new_frame = cv2.cvtColor(new_frame, cv2.COLOR_BGR2GRAY)
+            diff = cv2.absdiff(last_frame, new_frame)
+            arr.append(np.mean(diff))
+            last_frame = new_frame
+    np.save(output_file, arr)
 
 # def get_params_from_file(file):
 #     with open(file, 'r') as param_file:
