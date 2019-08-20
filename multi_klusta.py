@@ -4,11 +4,11 @@ import os
 import numpy as np
 import sys
 import fileinput
-import load_intan_rhd_format as load_rhd
 import glob
 import tqdm
 import cv2
-from moran_lab.band_pass_filters import savitzky_golay
+import load_intan_rhd_format as load_rhd
+# from moran_lab.band_pass_filters import savitzky_golay
 from scipy.signal import decimate
 
 # import yaml
@@ -29,6 +29,13 @@ def get_amp_names(file):
     return sorted(amps),sorted(dins)
 
 def merge_directories(first_dir,second_dir,out_dir,amp_letter="A"):
+    """
+    :param first_dir: the directory name with the first half of the recording
+    :param second_dir: the directory name with the second half of the recording
+    :param out_dir: the directory name where the full ouput will be saved
+    :param amp_letter:
+    :return:
+    """
     file_list = ["amp-"+amp_letter+"-{0:03}.dat".format(i) for i in range(32)]
     file_list.append("water.dat")
     file_list.append("sugar.dat")
@@ -80,8 +87,13 @@ def merge_directories(first_dir,second_dir,out_dir,amp_letter="A"):
 
 
 def turn_rhd_to_dat_full_directory(directory=None):
-
+    """
+    turns a full folder of rhd files into dat files
+    :param directory: if None will go over the files in the same directory, if given it will use the given dir
+    :return:
+    """
     # create new directory to write to
+
     if directory is not None:
         os.chdir(directory)
     else:
@@ -128,7 +140,7 @@ def turn_rhd_to_dat_full_directory(directory=None):
     for file in write_files_din:
         file.close()
 
-def run_klusta(base_file_name='amp-A-',start_val=0,stop_val=32,move_files=False,CAR=True):
+def run_klusta(base_file_name='amp-A-',start_val=0,stop_val=32,move_files=False,CAR=False):
 
     assert isinstance(base_file_name,str), "base file name has to be a string"
     if isinstance(start_val, list):
@@ -219,6 +231,13 @@ def move_kwiks(base_file_name='amp-A-',start_val=0,stop_val=32):
     return
 
 def undersample(in_file,out_file,undersample_factor=[10,10]):
+    """
+    :param in_file: the file to be undersampled
+    :param out_file: the output file name
+    :param undersample_factor: if you want to undersample by a factor of 10 or less use an integer. if you want to
+    undersample by a factor between 11-100 use a list or tuple of 2 ints, example: use [5,6] to undersample by 30.
+    :return:
+    """
     assert isinstance(undersample_factor,(list,tuple)),"undersample factor must be a list or tuple."
     with open(in_file,'rb') as in_f:
         with open(out_file,'wb') as out_f:
@@ -234,6 +253,13 @@ def undersample(in_file,out_file,undersample_factor=[10,10]):
 
 
 def run_kwik_gui(base_file_name='amp-A-',start_val=0,stop_val=32):
+    """
+    :param base_file_name: 'amp-X-' where X is the relevant letter from the intan recording station.
+    :param start_val: electrode to start from if its an integer, if its a list the function goes through the list and
+    no stop is needed.
+    :param stop_val: if start is not a list stop-1 will be the the electrode to stop at.
+    :return: nothing
+    """
     if isinstance(start_val,list):
         file_list = [base_file_name + "{0:03}".format(i) for i in start_val]
     else:
@@ -244,6 +270,11 @@ def run_kwik_gui(base_file_name='amp-A-',start_val=0,stop_val=32):
 
 
 def analyze_movement_from_vid(vid, output_file=None):
+    """
+    :param vid: input file for analysis
+    :param output_file: output file name, if None will have same name as video.
+    :return: does not return anything, but saves a .npy file with the result
+    """
     if output_file is None:
         output_file = vid[:-4]
 
