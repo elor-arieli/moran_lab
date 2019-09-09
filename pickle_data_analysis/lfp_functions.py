@@ -245,3 +245,28 @@ def corr_coef_mat_in_window(lfp_data,start_time_in_minutes,stop_time_in_minutes,
     pass
 
 # def plot_corrcoef_on_ax(ax,lfp_data,start_time_in_minutes,stop_time_in_minutes,average_every_x_minutes=1)
+
+def get_lfp_slice(filename,session_start,slice_len_hours,fs=300):
+    data = np.fromfile(filename, dtype=np.int16)
+    if slice_len_hours == 'full':
+        return data
+    slice_len = fs * 3600 * slice_len_hours
+    start_index = session_start[0] * 3600 * fs + session_start[1] * 60 * fs
+    return data[start_index:start_index + slice_len]
+
+def get_lfp_per_event(lfp_data, event_list, start_time, stop_time, fs=300, norm_to_BL=False, group_every_x=10):
+    slice_size = int((stop_time-start_time)*fs)
+    result_mat = np.zeros((len(event_list), slice_size))
+    for i,event in enumerate(event_list):
+        start_loc = int(event*fs)
+        result_mat[i] = lfp_data[start_loc:start_loc+slice_size]
+        if norm_to_BL:
+            BL_start = int((event-1)*300)
+            BL_stop = int(event*300)
+            result_mat[i] /= np.mean(lfp_data[BL_start:BL_stop])
+    if group_every_x is not None:
+        new_result_mat = []
+        for lfp in result_mat:
+            averages = [sum(lfp[i:i+group_every_x])//group_every_x for i in range(0,len(lfp),group_every_x)]
+            new_result_mat.append(averages)
+    return result_mat
