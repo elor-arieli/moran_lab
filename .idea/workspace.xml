@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="8932ca1c-b891-493b-a39a-bd3f31b54520" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extra_functions.py" afterPath="$PROJECT_DIR$/extra_functions.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pickle_data_analysis/spike_train_functions.py" afterPath="$PROJECT_DIR$/pickle_data_analysis/spike_train_functions.py" />
     </list>
     <ignored path="moran_lab.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,7 +27,7 @@
       <file leaf-file-name="spike_sort.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/spike_sort.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5865">
+            <state relative-caret-position="308">
               <caret line="353" column="31" selection-start-line="353" selection-start-column="31" selection-end-line="353" selection-end-column="31" />
               <folding>
                 <element signature="e#21#39#0" expanded="true" />
@@ -46,12 +46,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="extra_functions.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="extra_functions.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/extra_functions.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="49">
-              <caret line="3" column="42" selection-start-line="3" selection-start-column="42" selection-end-line="3" selection-end-column="42" />
-              <folding />
+            <state relative-caret-position="-750">
+              <caret line="13" column="27" selection-start-line="13" selection-start-column="27" selection-end-line="13" selection-end-column="27" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -71,9 +73,10 @@
       <file leaf-file-name="load_long_record_pickle.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pickle_data_analysis/load_long_record_pickle.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="16" column="49" selection-start-line="16" selection-start-column="36" selection-end-line="16" selection-end-column="49" />
+            <state relative-caret-position="374">
+              <caret line="28" column="7" selection-start-line="28" selection-start-column="7" selection-end-line="28" selection-end-column="7" />
               <folding>
+                <element signature="e#0#13#0" expanded="true" />
                 <element signature="e#13804#15527#0" expanded="false" />
                 <element signature="e#62282#65245#0" expanded="false" />
                 <element signature="e#65502#65599#0" expanded="false" />
@@ -97,11 +100,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="spike_train_functions.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="spike_train_functions.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pickle_data_analysis/spike_train_functions.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="697">
-              <caret line="55" column="65" selection-start-line="55" selection-start-column="64" selection-end-line="55" selection-end-column="65" />
+            <state relative-caret-position="2550">
+              <caret line="150" column="104" selection-start-line="150" selection-start-column="104" selection-end-line="150" selection-end-column="104" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -136,8 +139,8 @@
       <file leaf-file-name="pickle_spike_train_analysis.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pickle_spike_train_analysis.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="66" column="0" selection-start-line="66" selection-start-column="0" selection-end-line="66" selection-end-column="0" />
+            <state relative-caret-position="408">
+              <caret line="69" column="21" selection-start-line="69" selection-start-column="21" selection-end-line="69" selection-end-column="21" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
                 <element signature="e#548#1880#0" expanded="false" />
@@ -173,7 +176,6 @@
         <option value="$PROJECT_DIR$/algorithm testing.ipynb" />
         <option value="$PROJECT_DIR$/algorithm tester.ipynb" />
         <option value="$PROJECT_DIR$/pickle_spike_train_analysis.py" />
-        <option value="$PROJECT_DIR$/pickle_data_analysis/spike_train_functions.py" />
         <option value="$PROJECT_DIR$/pickle_data_analysis/extra_functions.py" />
         <option value="$PROJECT_DIR$/pickle_data_analysis/lfp_functions.py" />
         <option value="$PROJECT_DIR$/multi_file_handler/multi_lfp_loader.py" />
@@ -183,6 +185,7 @@
         <option value="$PROJECT_DIR$/spike_sort.py" />
         <option value="$PROJECT_DIR$/extra_files/moran_lab_env_15-11-18.yml" />
         <option value="$PROJECT_DIR$/extra_functions.py" />
+        <option value="$PROJECT_DIR$/pickle_data_analysis/spike_train_functions.py" />
       </list>
     </option>
   </component>
@@ -238,6 +241,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="moran_lab" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="moran_lab" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="moran_lab" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pickle_data_analysis" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -600,7 +617,14 @@
       <option name="project" value="LOCAL" />
       <updated>1568021732848</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="09/09/19 - fixed minor import issue">
+      <created>1568022090048</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1568022090048</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TodoView">
@@ -696,7 +720,8 @@
     <MESSAGE value="07/05/19 - added function for video movement analysis." />
     <MESSAGE value="20/08/19 - added extra functions script to moran_lab with anova 1 and 2 way, repeated measure and ttest" />
     <MESSAGE value="09/09/19 - added to extra functions a function to analyze movement in video files" />
-    <option name="LAST_COMMIT_MESSAGE" value="09/09/19 - added to extra functions a function to analyze movement in video files" />
+    <MESSAGE value="09/09/19 - fixed minor import issue" />
+    <option name="LAST_COMMIT_MESSAGE" value="09/09/19 - fixed minor import issue" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1040,41 +1065,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pickle_data_analysis/spike_train_functions.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="697">
-          <caret line="55" column="65" selection-start-line="55" selection-start-column="64" selection-end-line="55" selection-end-column="65" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pickle_spike_train_analysis.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="66" column="0" selection-start-line="66" selection-start-column="0" selection-end-line="66" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-            <element signature="e#548#1880#0" expanded="false" />
-            <element signature="e#1972#2904#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pickle_data_analysis/load_long_record_pickle.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="49" selection-start-line="16" selection-start-column="36" selection-end-line="16" selection-end-column="49" />
-          <folding>
-            <element signature="e#13804#15527#0" expanded="false" />
-            <element signature="e#62282#65245#0" expanded="false" />
-            <element signature="e#65502#65599#0" expanded="false" />
-            <element signature="e#65652#65819#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pickle_data_analysis/lfp_functions.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1785">
@@ -1083,16 +1073,6 @@
             <element signature="e#0#30#0" expanded="true" />
             <element signature="e#3984#4526#0" expanded="false" />
             <element signature="e#4637#5257#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spike_sort.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5865">
-          <caret line="353" column="31" selection-start-line="353" selection-start-column="31" selection-end-line="353" selection-end-column="31" />
-          <folding>
-            <element signature="e#21#39#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1107,9 +1087,57 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/extra_functions.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="49">
-          <caret line="3" column="42" selection-start-line="3" selection-start-column="42" selection-end-line="3" selection-end-column="42" />
-          <folding />
+        <state relative-caret-position="-750">
+          <caret line="13" column="27" selection-start-line="13" selection-start-column="27" selection-end-line="13" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pickle_spike_train_analysis.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="69" column="21" selection-start-line="69" selection-start-column="21" selection-end-line="69" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+            <element signature="e#548#1880#0" expanded="false" />
+            <element signature="e#1972#2904#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spike_sort.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="353" column="31" selection-start-line="353" selection-start-column="31" selection-end-line="353" selection-end-column="31" />
+          <folding>
+            <element signature="e#21#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pickle_data_analysis/load_long_record_pickle.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="28" column="7" selection-start-line="28" selection-start-column="7" selection-end-line="28" selection-end-column="7" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+            <element signature="e#13804#15527#0" expanded="false" />
+            <element signature="e#62282#65245#0" expanded="false" />
+            <element signature="e#65502#65599#0" expanded="false" />
+            <element signature="e#65652#65819#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pickle_data_analysis/spike_train_functions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2550">
+          <caret line="150" column="104" selection-start-line="150" selection-start-column="104" selection-end-line="150" selection-end-column="104" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

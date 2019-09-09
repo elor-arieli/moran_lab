@@ -17,6 +17,139 @@ from sklearn.metrics import euclidean_distances
 from scipy.stats import zscore
 
 
+def CC_norm_by_shuffled_trials(N1,N2,ST_len_in_ms=3000,ms_to_take_each_way=500,times_to_shuffle=20):
+    num_of_bins = len(N1[0])
+    bin_len = ST_len_in_ms/num_of_bins
+    bin_to_take_each_way = ms_to_take_each_way/bin_len
+
+    corrs = []
+    corrs_shuffled_trials = []
+    for trial in range(len(N1)):
+        corrs.append(np.correlate(N1[trial],N2[trial],mode='Full'))
+    corrs = np.array(corrs)
+    for i in range(times_to_shuffle):
+        np.random.shuffle(N1)
+        np.random.shuffle(N2)
+        for trial in range(len(N1)):
+            corrs_shuffled_trials.append(np.correlate(N1[trial],N2[trial],mode='Full'))
+    corrs_shuffled_trials = np.array(corrs_shuffled_trials)
+
+    mean_corrs = corrs.mean(axis=0)
+    mean_shuffled_corrs = corrs_shuffled_trials.mean(axis=0)
+#     print(num_of_bins-bin_to_take_each_way)
+#     print(num_of_bins+bin_to_take_each_way)
+    X = np.arange(bin_to_take_each_way*2)*bin_len-(bin_to_take_each_way*bin_len)
+    return X,(mean_corrs/mean_shuffled_corrs)[int(num_of_bins-bin_to_take_each_way):int(num_of_bins+bin_to_take_each_way)]
+
+def CC_norm_by_shuffled_trials_zscore(N1,N2,ST_len_in_ms=3000,ms_to_take_each_way=500,times_to_shuffle=20):
+    num_of_bins = len(N1[0])
+    bin_len = ST_len_in_ms/num_of_bins
+    bin_to_take_each_way = ms_to_take_each_way/bin_len
+
+    corrs = []
+    corrs_shuffled_trials = []
+    for trial in range(len(N1)):
+        corrs.append(np.correlate(N1[trial],N2[trial],mode='Full'))
+    corrs = np.array(corrs)
+    for i in range(times_to_shuffle):
+        np.random.shuffle(N1)
+        np.random.shuffle(N2)
+        for trial in range(len(N1)):
+            corrs_shuffled_trials.append(np.correlate(N1[trial],N2[trial],mode='Full'))
+    corrs_shuffled_trials = np.array(corrs_shuffled_trials)
+
+    mean_corrs = corrs.mean(axis=0)
+    mean_shuffled_corrs = corrs_shuffled_trials.mean(axis=0)
+    std_shuffled_corrs = corrs_shuffled_trials.mean(axis=0)
+#     print(num_of_bins-bin_to_take_each_way)
+#     print(num_of_bins+bin_to_take_each_way)
+    X = np.arange(bin_to_take_each_way*2)*bin_len-(bin_to_take_each_way*bin_len)
+    return X,((mean_corrs-mean_shuffled_corrs)/std_shuffled_corrs)[int(num_of_bins-bin_to_take_each_way):int(num_of_bins+bin_to_take_each_way)]
+
+def CC_norm_by_book(N1,N2,ST_len_in_ms=3000,ms_to_take_each_way=500):
+    num_of_bins = len(N1[0])
+    bin_len = ST_len_in_ms/num_of_bins
+    bin_to_take_each_way = ms_to_take_each_way/bin_len
+
+    corrs = []
+#     corrs2 = []
+    N1_psth = N1.mean(axis=0)
+    N2_psth = N2.mean(axis=0)
+    corr_psths = np.correlate(N1_psth,N2_psth,mode='Full')
+    for trial in range(len(N1)):
+        sum1 = sum(N1[trial])
+        sum2 = sum(N2[trial])
+        up = (sum1*sum2)/num_of_bins
+        down = up**0.5
+        if sum1 != 0 and sum2 != 0:
+            corrs.append((np.correlate(N1[trial],N2[trial],mode='Full')-up)/down)
+#         corrs2.append((np.correlate(N2[trial],N1[trial],mode='Full')-up)/down)
+    corrs = np.array(corrs)
+#     corrs2 = np.array(corrs2)
+
+    mean_corrs = corrs.mean(axis=0)
+#     mean_corrs2 = corrs2.mean(axis=0)
+#     print(num_of_bins-bin_to_take_each_way)
+#     print(num_of_bins+bin_to_take_each_way)
+    X = np.arange(bin_to_take_each_way*2+1)*bin_len-(bin_to_take_each_way*bin_len)
+    return X,(mean_corrs)[int(num_of_bins-bin_to_take_each_way-1):int(num_of_bins+bin_to_take_each_way)]
+
+def CC_norm_by_psth(N1,N2,ST_len_in_ms=3000,ms_to_take_each_way=500):
+    num_of_bins = len(N1[0])
+    bin_len = ST_len_in_ms/num_of_bins
+    bin_to_take_each_way = ms_to_take_each_way/bin_len
+
+    corrs = []
+#     corrs2 = []
+    N1_psth = N1.mean(axis=0)
+    N2_psth = N2.mean(axis=0)
+    corr_psths = np.correlate(N1_psth,N2_psth,mode='Full')
+    for trial in range(len(N1)):
+        sum1 = sum(N1[trial])
+        sum2 = sum(N2[trial])
+        up = (sum1*sum2)/num_of_bins
+        down = up**0.5
+        if sum1 != 0 and sum2 != 0:
+            corrs.append(np.correlate(N1[trial],N2[trial],mode='Full'))
+#         corrs2.append((np.correlate(N2[trial],N1[trial],mode='Full')-up)/down)
+    corrs = np.array(corrs)
+#     corrs2 = np.array(corrs2)
+
+    mean_corrs = corrs.mean(axis=0)
+#     mean_corrs2 = corrs2.mean(axis=0)
+#     print(num_of_bins-bin_to_take_each_way)
+#     print(num_of_bins+bin_to_take_each_way)
+    X = np.arange(bin_to_take_each_way*2+1)*bin_len-(bin_to_take_each_way*bin_len)
+    return X,(mean_corrs-corr_psths)[int(num_of_bins-bin_to_take_each_way-1):int(num_of_bins+bin_to_take_each_way)]
+
+def CC_norm_by_book_for_fast_spiking(N1,N2,ST_len_in_ms=3000,ms_to_take_each_way=500):
+    num_of_bins = len(N1[0])
+    bin_len = ST_len_in_ms/num_of_bins
+    bin_to_take_each_way = ms_to_take_each_way/bin_len
+
+    corrs = []
+#     corrs2 = []
+    N1_psth = N1.mean(axis=0)
+    N2_psth = N2.mean(axis=0)
+    corr_psths = np.correlate(N1_psth,N2_psth,mode='Full')
+    for trial in range(len(N1)):
+        sum1 = sum(N1[trial])
+        sum2 = sum(N2[trial])
+        up = (sum1*sum2)/num_of_bins
+        down = ((sum1-sum1**2/num_of_bins)*(sum2-sum2**2/num_of_bins))**0.5
+        if sum1 != 0 and sum2 != 0:
+            corrs.append((np.correlate(N1[trial],N2[trial],mode='Full')-up)/down)
+#         corrs2.append((np.correlate(N2[trial],N1[trial],mode='Full')-up)/down)
+    corrs = np.array(corrs)
+#     corrs2 = np.array(corrs2)
+
+    mean_corrs = corrs.mean(axis=0)
+#     mean_corrs2 = corrs2.mean(axis=0)
+#     print(num_of_bins-bin_to_take_each_way)
+#     print(num_of_bins+bin_to_take_each_way)
+    X = np.arange(bin_to_take_each_way*2+1)*bin_len-(bin_to_take_each_way*bin_len)
+    return X,(mean_corrs)[int(num_of_bins-bin_to_take_each_way-1):int(num_of_bins+bin_to_take_each_way)]
+
 def find_nearest(array,value):
     idx = (np.abs(array-value)).argmin()
     return array[idx]
