@@ -2,6 +2,36 @@ import numpy as np
 import pandas as pd
 import statsmodels.stats.anova as anova
 from scipy.stats import f_oneway,ttest_ind
+import statsmodelsimport cv2
+import matplotlib.pyplot as plt
+from moran_lab.band_pass_filters import savitzky_golay
+from tqdm import tqdm
+from scipy.io import loadmat
+import yaml
+
+def analyze_movement_from_vid(vid, output_file=None):
+    if output_file is None:
+        output_file = vid[:-4]
+
+    arr = []
+    vidcap = cv2.VideoCapture(vid)
+    success,last_frame = vidcap.read()
+    last_frame = cv2.cvtColor(last_frame, cv2.COLOR_BGR2GRAY)
+    counter = 0
+    while success:
+        counter+=1
+        if counter%10000 == 0:
+            hours = counter//108000
+            minutes = (counter%108000)//1800
+            secs = ((counter%108000)%1800)//30
+            print("{}:{}:{} finished".format(hours, minutes,secs))
+        success,new_frame = vidcap.read()
+        if success:
+            new_frame = cv2.cvtColor(new_frame, cv2.COLOR_BGR2GRAY)
+            diff = cv2.absdiff(last_frame, new_frame)
+            arr.append(np.mean(diff))
+            last_frame = new_frame
+    np.save(output_file,arr)
 
 def two_way_anova(data, independent_var1, independent_var2, dependent_var,dtype='df'):
     import statsmodels.api as sm
