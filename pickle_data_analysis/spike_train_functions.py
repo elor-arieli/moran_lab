@@ -16,6 +16,59 @@ from sklearn.metrics import euclidean_distances
 # from sklearn.decomposition import PCA
 from scipy.stats import zscore
 
+def calc_batch_times(taste_events):
+    diffs = taste_events[1:] - taste_events[:-1]
+    change_locs = np.array(np.where(diffs > 300)) + 1
+    return taste_events[change_locs[0]]
+
+def split_event_times_by_batches(event_times, batch_times):
+    mat = []
+    previous = 0
+    for current in batch_times:
+        this_batch_times = [i for i in event_times if previous < i < current]
+        mat.append(this_batch_times)
+        previous = current
+    last_batch = [i for i in event_times if previous < i]
+    mat.append(last_batch)
+    return mat
+
+def get_spikes_in_time_frame(ST,start,stop):
+    return np.array([i for i in ST if start<i<stop])
+
+def get_neuron_spikes_from_dic(neuron_dic,start_time=0,stop_time=43200,binned=True,binsize=1,session_start=False):
+    if not binned:
+        new_mat = []
+        for neuron in neuron_dic:
+            ST = neuron[2]
+            if session_start:
+                ST-=session_start
+            new_mat.append(get_spikes_in_time_frame(ST,start_time,stop_time))
+        return np.array(new_mat)
+
+    else:
+        bin_amount = int((stop_time-start_time)/binsize)
+        new_mat = np.zeros((len(neuron_dic),bin_amount))
+        for i,neuron in enumerate(neuron_dic):
+            ST = neuron[2]
+            if session_start:
+                ST-=session_start
+            true_ST = get_spikes_in_time_frame(ST,start_time,stop_time)
+            new_mat[i,:] = np.histogram(true_ST,bin_amount,range=(start_time,stop_time))[0]
+        return np.array(new_mat)
+
+def calculate_Corr_over_time_of_BL_all_neurons(neuron_list,large_binsize=60, small_binsize=1,sig_start=0,sig_stop=43200):
+    sig_len = sig_stop-sig_start
+    neuron_mat = get_neuron_spikes_from_dic(neuron_list,sig_start,sig_stop,True,small_binsize)
+    new_neuron_mat = neuron_mat.reshape(len(neuron_list),-1,large_binsize)
+    num_neurons, num_times, _ = new_neuron_mat.shape
+    full_corr_mat = []
+    for time in tqdm(range(num_times)):
+        specific_corr_vec = []
+        for N1 in range(num_neurons):
+            for N2 in range(N1+1, num_neurons):
+                specific_corr_vec.append(np.corrcoef(new_neuron_mat[N1,time,:],new_neuron_mat[N2,time,:])[0,1])
+        full_corr_mat.append(specific_corr_vec)
+    return np.array(full_corr_mat).T
 
 def CC_norm_by_shuffled_trials(N1,N2,ST_len_in_ms=3000,ms_to_take_each_way=500,times_to_shuffle=20):
     num_of_bins = len(N1[0])

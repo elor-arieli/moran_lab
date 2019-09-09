@@ -10,6 +10,12 @@ from tqdm import tqdm
 from scipy.io import loadmat
 import yaml
 
+def smooth_all_row_in_mat(mat,window=15,order=3):
+    new_mat = []
+    for row in mat:
+        new_mat.append(savitzky_golay(row,window,order))
+    return np.array(new_mat)
+
 def analyze_movement_from_vid(vid, output_file=None):
     if output_file is None:
         output_file = vid[:-4]
