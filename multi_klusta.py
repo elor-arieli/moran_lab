@@ -10,6 +10,7 @@ import cv2
 import load_intan_rhd_format as load_rhd
 # from moran_lab.band_pass_filters import savitzky_golay
 from scipy.signal import decimate
+from moran_lab.band_pass_filters import butter_bandpass_filter
 
 # import yaml
 
@@ -230,7 +231,7 @@ def move_kwiks(base_file_name='amp-A-',start_val=0,stop_val=32):
         os.chdir('..')
     return
 
-def undersample(in_file,out_file,undersample_factor=[10,10]):
+def undersample(in_file,out_file,undersample_factor=[10,10],lowpass=None,FS=30000):
     """
     :param in_file: the file to be undersampled
     :param out_file: the output file name
@@ -248,6 +249,10 @@ def undersample(in_file,out_file,undersample_factor=[10,10]):
                     filtered_twice = decimate(filtered_once,undersample_factor[1],zero_phase=True)
                 else:
                     filtered_twice = decimate(data,undersample_factor[0],zero_phase=True)
+
+                if lowpass is not None:
+                    filtered_twice = butter_bandpass_filter(lowcut=5,highcut=lowpass,data=filtered_twice,fs=FS)
+
                 filtered_twice.astype('int16').tofile(out_f)
                 data = np.fromfile(in_f,dtype=np.int16,count=3000000)
 
