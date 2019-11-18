@@ -45,7 +45,6 @@ class pickle_dic_loader(object):
         self.psth_matrix = create_psth_matrix_for_pca(self.neurons, self.event_times, bad_elec_list=[])
         print("created matrix has {} neurons".format(self.psth_matrix.shape[1]))
 
-
 def create_psth_matrix_for_pca(all_neurons_spike_times, event_dic,bad_elec_list=[]):
     matrix_dic = []
     # taste_event_amount = {'water': 0, 'sugar': 0, 'nacl': 0, 'CA': 0}

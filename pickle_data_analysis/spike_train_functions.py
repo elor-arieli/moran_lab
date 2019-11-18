@@ -15,6 +15,7 @@ from sklearn import manifold
 from sklearn.metrics import euclidean_distances
 # from sklearn.decomposition import PCA
 from scipy.stats import zscore
+from moran_lab.band_pass_filters import savitzky_golay
 
 def calc_batch_times(taste_events):
     diffs = taste_events[1:] - taste_events[:-1]
@@ -227,8 +228,8 @@ def get_all_responses_in_time_frame(spike_train, event_list, choice_start_time, 
         left_border = np.searchsorted(spike_train - event, psth_start_time)
         right_border = np.searchsorted(spike_train - event, psth_stop_time)
         spikes = spike_train[left_border:right_border] - event
-        hist1, bin_edges = np.histogram(all_spikes, 100, (psth_start_time, psth_stop_time))
-        spikes_in_bin = average_spikes_in_bin / 0.05
+        hist1, bin_edges = np.histogram(spikes, 100, (psth_start_time, psth_stop_time))
+        spikes_in_bin = hist1 / 0.05
         norm_curve = savitzky_golay(spikes_in_bin, 9, 3)
         if use_zscore:
             response_mat.append(zscore(norm_curve))

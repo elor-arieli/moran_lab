@@ -238,7 +238,6 @@ def run_HMM(directory, index, spike_matrix):
                 normRate(u,i) = normRate(u,i) + sum(squeeze(gammas(tri,:,i)));
             end
             if normRate(u,i) == 0
-                rate(u,i) = 0;
             else
                 rate(u,i) = rate(u,i) / normRate(u,i);
             end

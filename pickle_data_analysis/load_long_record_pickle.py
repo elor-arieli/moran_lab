@@ -698,7 +698,7 @@ def calcCV(spike_train):
         spike_intervals = (spike_train[1:] - spike_train[:-1])*1000
         mean = np.mean(spike_intervals)
         std = np.std(spike_intervals)
-    CV = mean/std
+    CV = std/mean
     return CV
 
 def calcFF(spike_train,pieces):
@@ -719,7 +719,7 @@ def calcFF(spike_train,pieces):
             spikes_in_pieces.append(len([spike for spike in spike_train if borders[i-1] < spike < borders[i]]))
     mean = np.mean(spikes_in_pieces)
     var = np.var(spikes_in_pieces)
-    FF = mean/var
+    FF = var/mean
     return FF
 
 
