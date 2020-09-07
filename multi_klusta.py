@@ -7,7 +7,7 @@ import fileinput
 import glob
 import tqdm
 import cv2
-import load_intan_rhd_format as load_rhd
+from moran_lab import load_intan_rhd_format as load_rhd
 # from moran_lab.band_pass_filters import savitzky_golay
 from scipy.signal import decimate
 from moran_lab.band_pass_filters import butter_bandpass_filter
@@ -50,6 +50,8 @@ def merge_directories(first_dir,second_dir,out_dir,amp_letter="A"):
     for file_name in (file_list):
         if os.path.exists(first_dir + "//" + file_name):
             print("working on file {}".format(file_name))
+            if not os.path.exists(out_dir):
+                os.mkdir(out_dir)
             with open(out_dir + "//" + file_name, "wb") as out_file:
 
                 with open(first_dir + "//" + file_name, "rb") as in_file_first:
